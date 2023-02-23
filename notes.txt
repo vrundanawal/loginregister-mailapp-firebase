@@ -1,0 +1,7 @@
+Firebase setup
+1) Create a account in firebase
+2)go to console and add the project(create a project)
+3)npm install firebase
+4)firebase login
+5) Inside the firebase -> Build folder -> Authentication -> Sign-in-method -> Add the provider (services) ex: email/password or google
+
