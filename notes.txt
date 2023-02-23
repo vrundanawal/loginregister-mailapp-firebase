@@ -5,3 +5,16 @@ Firebase setup
 4)firebase login
 5) Inside the firebase -> Build folder -> Authentication -> Sign-in-method -> Add the provider (services) ex: email/password or google
 
+6) For to check the firebase connection with react app:-
+Realtime Database -> copy the url
+Link to check the connection setup
+//https://firebase.google.com/docs/database/web/read-and-write
+
+7) Authentication in firebase:
+https://firebase.google.com/docs/auth/web/start
+
+8) Using updateProfile function we can add the name field data inside the user
+
+
+
+

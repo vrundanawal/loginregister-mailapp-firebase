@@ -3,8 +3,8 @@ import React from "react";
 const Register = () => {
   return (
     <>
-      <div className="  bg-light rounded-3 col-md-6 mx-auto">
-        <div className="container-fluid py-5">
+      <div className="bg-light rounded-3 col-md-6 mx-auto mt-5">
+        <div className="container-fluid py-3">
           <h5 className="fw-bold">Register Form</h5>
           <form>
             <div className="mb-3">
