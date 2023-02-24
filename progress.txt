@@ -1,3 +1,11 @@
 22-02-2023
 1) Set up the firebase configuration
 2) Learn about the box model in css.
+
+24/02/2023
+1)Register the user and store the values in database
+2)Service used for this Email and password
+3) Login the user deatils and checking from DB.
+4) Used Context api and some utility function 
+5) added service with google account
+6) add the user with google account

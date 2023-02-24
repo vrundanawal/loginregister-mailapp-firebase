@@ -4,8 +4,11 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  GoogleAuthProvider, //for google login
+  signInWithPopup,
 } from "firebase/auth"; //for auth
 import { getDatabase, ref, set } from "firebase/database"; //for database
+
 //import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -24,6 +27,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const firebaseAuth = getAuth(firebaseApp); //for Auth
 const dataBase = getDatabase(firebaseApp); //to get the database from firebase
+const googleProvider = new GoogleAuthProvider(); //for google login
 
 const FirebaseContext = createContext(null);
 
@@ -46,11 +50,16 @@ This function is going to pass to context provider in value
       password
     )
       .then((res) => {
-        alert("Signup Success");
+        alert("User Register Successfully");
         const userData = res.user;
         console.log(userData);
       })
-      .catch();
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorCode + errorMessage);
+        console.log(errorCode + errorMessage);
+      });
 
     return signupUser;
   };
@@ -74,9 +83,41 @@ This function is going to pass to context provider in value
 
     return signInuser;
   };
+
+  //signup with google account
+  const signupWithGoogle = () => {
+    const signupUser = signInWithPopup(firebaseAuth, googleProvider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log(user + "token :- " + token);
+        alert(`Login Successfully`);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(email, credential);
+        alert(errorCode + errorMessage);
+      });
+    return signupUser;
+  };
+
   return (
     <FirebaseContext.Provider
-      value={{ signupUserWithEmailAndPassword, putDatToDatabase, signIn }}
+      value={{
+        signupUserWithEmailAndPassword,
+        putDatToDatabase,
+        signIn,
+        signupWithGoogle,
+      }}
     >
       {props.children}
     </FirebaseContext.Provider>

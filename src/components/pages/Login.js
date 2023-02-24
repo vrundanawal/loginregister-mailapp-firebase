@@ -41,6 +41,14 @@ const Login = () => {
           >
             Login
           </div>
+          <div
+            className="btn btn-warning mx-2"
+            onClick={() => {
+              firebase.signupWithGoogle();
+            }}
+          >
+            SignIn With Google
+          </div>
         </form>
       </div>
     </div>
