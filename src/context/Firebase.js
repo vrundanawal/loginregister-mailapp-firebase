@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; //for auth
 import { getDatabase, ref, set } from "firebase/database"; //for database
-import { getFirestore } from "firebase/firestore";
+//import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDV-IVgGvfgs8pgPqv2zyrT3uyUXErPR1Y",
@@ -40,7 +40,7 @@ This function is going to pass to context provider in value
   };
 
   const putDatToDatabase = (key, data) => {
-    set((dataBase, key), data);
+    set(ref(dataBase, key), data);
   };
   return (
     <FirebaseContext.Provider
