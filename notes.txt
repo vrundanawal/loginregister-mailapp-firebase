@@ -10,10 +10,19 @@ Realtime Database -> copy the url
 Link to check the connection setup
 //https://firebase.google.com/docs/database/web/read-and-write
 
-7) Authentication in firebase:
+7) Authentication in firebase: This is a service to signin with google and email/password
 https://firebase.google.com/docs/auth/web/start
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 
 8) Using updateProfile function we can add the name field data inside the user
+
+9) Login with firebase and react:
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 
 
 

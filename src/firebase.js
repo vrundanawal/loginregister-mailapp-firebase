@@ -13,6 +13,7 @@ const firebaseConfig = {
     "https://loginregister-mailapp-52a5f-default-rtdb.firebaseio.com/",
 };
 
+// Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);

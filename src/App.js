@@ -9,11 +9,16 @@ import { getDatabase, ref, set } from "firebase/database";
 import { app } from "./firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Signup from "./components/pages/Signup";
+import SignIn from "./components/pages/SignIn";
+import { useFirebase } from "./context/Firebase"; //custom hook
 
 const db = getDatabase(app);
 const auth = getAuth(app);
 
 function App() {
+  const firebase = useFirebase();
+  console.log(firebase);
+
   const putData = () => {
     set(ref(db, "users/vrunda"), {
       id: 1,
@@ -50,6 +55,9 @@ function App() {
           Create user
         </button>
         <Signup />
+        <hr />
+        <SignIn />
+        <hr />
       </div>
     </>
   );
