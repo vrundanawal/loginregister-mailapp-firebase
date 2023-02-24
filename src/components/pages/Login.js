@@ -1,49 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import { useFirebase } from "../../context/Firebase";
 
 const Login = () => {
+  //store the custom hook in variable
+  const firebase = useFirebase();
+  console.log(firebase); //to see all utility function inside console
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
-    <>
-      {/* Hello world */}
-      <form>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+    <div className="bg-light rounded-3 col-md-6 mx-auto mt-5">
+      <div className="container-fluid py-3">
+        <h5 className="fw-bold">Login Form</h5>
+        <form>
+          <div className="mb-3">
+            <label htmlFor="Email" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              className="form-control"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {/* <div className="form-text">Please Enter your Email</div> */}
+            <label htmlFor="Password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="exampleInputPassword1"
-          />
-        </div>
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
-          </label>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-    </>
+          <div
+            className="btn btn-primary mx-2"
+            onClick={() => {
+              firebase.signIn(email, password);
+            }}
+          >
+            Login
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

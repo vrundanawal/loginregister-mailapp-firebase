@@ -1,6 +1,10 @@
 import { createContext, useContext } from "react";
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; //for auth
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth"; //for auth
 import { getDatabase, ref, set } from "firebase/database"; //for database
 //import { getFirestore } from "firebase/firestore";
 
@@ -36,15 +40,43 @@ This function is going to pass to context provider in value
   */
   //utility functions
   const signupUserWithEmailAndPassword = (email, password) => {
-    return createUserWithEmailAndPassword(firebaseAuth, email, password);
+    const signupUser = createUserWithEmailAndPassword(
+      firebaseAuth,
+      email,
+      password
+    )
+      .then((res) => {
+        alert("Signup Success");
+        const userData = res.user;
+        console.log(userData);
+      })
+      .catch();
+
+    return signupUser;
   };
 
   const putDatToDatabase = (key, data) => {
     set(ref(dataBase, key), data);
   };
+
+  const signIn = (email, password) => {
+    const signInuser = signInWithEmailAndPassword(firebaseAuth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential.user);
+        alert("Login Successfully");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorCode + errorMessage);
+        console.log(errorCode + errorMessage);
+      });
+
+    return signInuser;
+  };
   return (
     <FirebaseContext.Provider
-      value={{ signupUserWithEmailAndPassword, putDatToDatabase }}
+      value={{ signupUserWithEmailAndPassword, putDatToDatabase, signIn }}
     >
       {props.children}
     </FirebaseContext.Provider>

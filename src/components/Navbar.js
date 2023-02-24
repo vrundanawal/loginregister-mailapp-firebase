@@ -8,7 +8,7 @@ const Navbar = () => {
         <div className="container mx-auto">
           <div className="d-flex">
             <Link to="/" className="navbar-brand">
-              Gmail-App
+              eMail-App
             </Link>
           </div>
           <div className="d-flex">
