@@ -5,13 +5,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { FirebaseProvider } from "./context/Firebase";
 
 ReactDOM.render(
   <React.StrictMode>
-    <FirebaseProvider>
-      <App />
-    </FirebaseProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

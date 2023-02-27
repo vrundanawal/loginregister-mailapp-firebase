@@ -5,6 +5,7 @@ import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import NotFound from "./components/pages/NotFound";
 import Home from "./components/Home";
+import EmailList from "./components/EmailList";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/mails" element={<EmailList />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>

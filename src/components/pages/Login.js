@@ -1,12 +1,26 @@
 import React, { useState } from "react";
-import { useFirebase } from "../../context/Firebase";
-
+import { useNavigate } from "react-router-dom";
 const Login = () => {
-  //store the custom hook in variable
-  const firebase = useFirebase();
-  console.log(firebase); //to see all utility function inside console
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  };
+
+  const handleLogin = () => {
+    alert("Login successfully");
+    navigate("/mails");
+  };
+
   return (
     <div className="bg-light rounded-3 col-md-6 mx-auto mt-5">
       <div className="container-fluid py-3">
@@ -18,9 +32,10 @@ const Login = () => {
             </label>
             <input
               type="email"
-              value={email}
+              name="email"
+              value={user.email}
               className="form-control"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleChange}
             />
             {/* <div className="form-text">Please Enter your Email</div> */}
             <label htmlFor="Password" className="form-label">
@@ -28,26 +43,14 @@ const Login = () => {
             </label>
             <input
               type="password"
+              name="password"
               className="form-control"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={user.password}
+              onChange={handleChange}
             />
           </div>
-          <div
-            className="btn btn-primary mx-2"
-            onClick={() => {
-              firebase.signIn(email, password);
-            }}
-          >
+          <div className="btn btn-primary mx-2" onClick={handleLogin}>
             Login
-          </div>
-          <div
-            className="btn btn-warning mx-2"
-            onClick={() => {
-              firebase.signupWithGoogle();
-            }}
-          >
-            SignIn With Google
           </div>
         </form>
       </div>

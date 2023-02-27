@@ -9,3 +9,46 @@
 4) Used Context api and some utility function 
 5) added service with google account
 6) add the user with google account
+
+27/02/2023
+1) to create a new branch : -git checkout -b feature/develope
+2) Push into github : - git push origin feature/develope
+3) fireStore Database is the database to used to stored the data
+
+4) Add the rules inside the firestore Database
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Listings
+    match /listings/{listing} {
+    	allow read;
+      allow create: if request.auth != null;
+    	allow delete: if resource.data.userRef == request.auth.uid;
+      allow update: if resource.data.userRef == request.auth.uid;
+    }
+   
+    // Users
+    match /users/{user} {
+    	allow read;
+    	allow create;
+    	allow update: if request.auth.uid == user
+    }
+  }
+}
+
+5) Add rules to Storage
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read;
+      allow write: if
+      request.auth != null 
+    }
+  }
+}
+
+6)Iside the cloudStore :
+Data Tab :- Add the collections
+collection Id : listings
