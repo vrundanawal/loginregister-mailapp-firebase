@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
-import {
-  query,
-  getDocs,
-  collection,
-  where,
-  getDoc,
-  doc,
-} from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,21 +23,22 @@ const Login = () => {
     e.preventDefault();
     console.log(user);
     const { email, password } = user;
-
-    const docRef = doc(db, "users", email);
-    const docSnap = await getDoc(docRef);
-    docSnap.data();
-    try {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        console.log(docSnap.data());
-        navigate("/mails");
-      } else {
-        console.log("Document does not exist");
-        alert("User does not exist. Please register the user");
+    if (email && password) {
+      const docRef = doc(db, "users", email);
+      try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          console.log(docSnap.data());
+          navigate("/mails");
+        } else {
+          console.log("Document does not exist");
+          alert("User does not exist. Please register the user");
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      alert("All fields are required");
     }
   };
   return (
