@@ -19,33 +19,42 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(user);
+  const handleSubmit = async () => {
+    //console.log(user);
     const { email, password } = user;
-    if (email && password) {
-      const docRef = doc(db, "users", email);
-      try {
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          console.log(docSnap.data());
+    if (email === "" || password === "") {
+      alert("All fields are required!");
+    }
+    const docRef = doc(db, "users", email);
+
+    try {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        //console.log(docSnap.data());
+        const usersData = docSnap.data().user;
+        //console.log(usersData);
+        let registerEmail = usersData.email;
+        let registerPassword = usersData.password;
+        if (email === registerEmail && password === registerPassword) {
           navigate("/mails");
         } else {
-          console.log("Document does not exist");
-          alert("User does not exist. Please register the user");
+          alert("User Password is not match");
         }
-      } catch (error) {
-        console.log(error);
+      } else {
+        console.log("Document does not exist");
+        alert("Email is not register");
       }
-    } else {
-      alert("All fields are required");
+    } catch (error) {
+      console.log(error);
+      alert("User email and password are not match");
     }
   };
+
   return (
     <div className="bg-light rounded-3 col-md-6 mx-auto mt-5">
       <div className="container-fluid py-3">
         <h5 className="fw-bold">Login Form</h5>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="mb-3">
             <label htmlFor="Email" className="form-label">
               Email
@@ -57,7 +66,7 @@ const Login = () => {
               className="form-control"
               onChange={handleChange}
             />
-            {/* <div className="form-text">Please Enter your Email</div> */}
+
             <label htmlFor="Password" className="form-label">
               Password
             </label>
@@ -69,11 +78,19 @@ const Login = () => {
               onChange={handleChange}
             />
           </div>
-          {/* <div className="btn btn-primary mx-2" onClick={handleLogin}>
+
+          <div
+            className="btn btn-primary mx-2"
+            test={user}
+            onClick={handleSubmit}
+          >
             Login
-          </div> */}
-          <div className="btn btn-primary mx-2" onClick={handleSubmit}>
-            Login
+          </div>
+          <div
+            className="btn btn-primary mx-2"
+            onClick={() => navigate("/register")}
+          >
+            Register
           </div>
         </form>
       </div>

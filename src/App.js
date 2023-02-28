@@ -7,14 +7,7 @@ import NotFound from "./components/pages/NotFound";
 import Home from "./components/Home";
 import EmailList from "./components/pages/EmailList";
 
-// import { useState } from "react";
-
 function App() {
-  //  const [token, setToken] = useState();
-  //    if (!token) {
-  //      return <Login setToken={setToken} />;
-  //    }
-
   return (
     <>
       <Router>
