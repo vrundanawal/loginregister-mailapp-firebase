@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
-import { query, getDocs, collection, where } from "firebase/firestore";
+import {
+  query,
+  getDocs,
+  collection,
+  where,
+  getDoc,
+  doc,
+} from "firebase/firestore";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,25 +26,25 @@ const Login = () => {
     });
   };
 
-  // const handleLogin = () => {
-  //   alert("Login successfully");
-  //   navigate("/mails");
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(user);
     const { email, password } = user;
-    const q = query(collection(db, "users"), where("email", "==", email));
-    const docs = await getDocs(q);
-    console.log(docs);
-    setUser({
-      email: "",
-      password: "",
-    });
-    if (email && password) {
-      navigate("/mails");
-    } else {
-      alert("Does not match");
+
+    const docRef = doc(db, "users", email);
+    const docSnap = await getDoc(docRef);
+    docSnap.data();
+    try {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log(docSnap.data());
+        navigate("/mails");
+      } else {
+        console.log("Document does not exist");
+        alert("User does not exist. Please register the user");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (

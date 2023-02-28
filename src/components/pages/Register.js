@@ -22,18 +22,15 @@ const Register = () => {
       [name]: value,
     });
   };
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    console.log(user);
     const { fname, lname, email, password, phone } = user;
     //add the validation
     if (fname && lname && email && password && phone) {
-      addDoc(collection(db, `users`), {
-        users: user,
+      const usersRef = collection(db, "users");
+      await setDoc(doc(usersRef, email), {
+        user: user,
       });
-
-      // setDoc(doc(db, "users", "LA"), {
-      //   users: user,
-      // });
-
       navigate("/login");
     } else {
       alert("All the fields are required");
