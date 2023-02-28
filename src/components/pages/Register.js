@@ -1,16 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  // const [fname, setFName] = useState("");
-  // const [lname, setLName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
   const [user, setUser] = useState({
     fname: "",
@@ -19,6 +13,7 @@ const Register = () => {
     password: "",
     phone: "",
   });
+
   //handleChange
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,6 +29,10 @@ const Register = () => {
       addDoc(collection(db, `users`), {
         users: user,
       });
+
+      // setDoc(doc(db, "users", "LA"), {
+      //   users: user,
+      // });
 
       navigate("/login");
     } else {
