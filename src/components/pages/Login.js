@@ -21,28 +21,23 @@ const Login = () => {
 
   const handleSubmit = async () => {
     //console.log(user);
-    const { email, password } = user;
-    if (email === "" || password === "") {
-      alert("All fields are required!");
-    }
-    const docRef = doc(db, "users", email);
 
     try {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        //console.log(docSnap.data());
-        const usersData = docSnap.data().user;
-        //console.log(usersData);
-        let registerEmail = usersData.email;
-        let registerPassword = usersData.password;
-        if (email === registerEmail && password === registerPassword) {
+      const { email, password } = user;
+      if (email && password) {
+        const docSnap = await getDoc(doc(db, "users", user.email));
+        const userData = docSnap.data();
+        console.log(userData);
+        console.log(userData.email);
+        console.log(userData.password);
+        if (userData.email === email && userData.password === password) {
           navigate("/mails");
         } else {
-          alert("User Password is not match");
+          alert("Email and password do not match");
         }
       } else {
         console.log("Document does not exist");
-        alert("Email is not register");
+        alert("All fields are required");
       }
     } catch (error) {
       console.log(error);
@@ -79,11 +74,7 @@ const Login = () => {
             />
           </div>
 
-          <div
-            className="btn btn-primary mx-2"
-            test={user}
-            onClick={handleSubmit}
-          >
+          <div className="btn btn-primary mx-2" onClick={handleSubmit}>
             Login
           </div>
           <div

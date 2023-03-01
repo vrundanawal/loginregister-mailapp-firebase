@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase.config";
 import { useNavigate } from "react-router-dom";
 
@@ -22,18 +22,19 @@ const Register = () => {
       [name]: value,
     });
   };
+
+  //Register the user in firebase
   const handleRegister = async () => {
-    console.log(user);
-    const { fname, lname, email, password, phone } = user;
-    //add the validation
-    if (fname && lname && email && password && phone) {
-      const usersRef = collection(db, "users");
-      await setDoc(doc(usersRef, email), {
-        user: user,
-      });
-      navigate("/login");
-    } else {
-      alert("All the fields are required");
+    try {
+      const { fname, lname, email, password, phone } = user;
+      if (fname && lname && email && password && phone) {
+        await setDoc(doc(db, "users", user.email), user);
+        navigate("/login");
+      } else {
+        alert("All the fields are required");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
