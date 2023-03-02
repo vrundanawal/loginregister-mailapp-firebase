@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.clear();
+  };
   return (
     <div className="mb-4 py-4">
       <nav className="navbar navbar-dark fixed-top bg-dark">
@@ -17,6 +22,14 @@ const Navbar = () => {
             </Link>
             <Link to="/register" className="btn btn-dark  ">
               Register
+            </Link>
+            {/* {loggedIn && (
+              <Link to="/logout" className="btn btn-dark  ">
+                Logout
+              </Link>
+            )} */}
+            <Link to="/" className="btn btn-dark " onClick={handleLogout}>
+              Logout
             </Link>
           </div>
         </div>

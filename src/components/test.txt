@@ -1,0 +1,4 @@
+users = {  'mailid': {    fname: '',    lname: '',    mailid: '',    password: '',    phone: '',mails:[{
+  subject:'',
+  body:''
+}]  }}

@@ -1,8 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -23,12 +24,24 @@ const Register = () => {
     });
   };
 
+  //track for userDetail using useeffect
+  useEffect(() => {
+    localStorage.setItem("userData", JSON.stringify(user));
+  }, [user]);
+
+  const mail = {
+    body: "test mail",
+    subject: "test",
+  };
   //Register the user in firebase
   const handleRegister = async () => {
     try {
       const { fname, lname, email, password, phone } = user;
       if (fname && lname && email && password && phone) {
         await setDoc(doc(db, "users", user.email), user);
+
+        await setDoc(doc(db, "mails", user.email), mail);
+
         navigate("/login");
       } else {
         alert("All the fields are required");
@@ -102,13 +115,6 @@ const Register = () => {
 
             <div className="btn btn-primary mx-2" onClick={handleRegister}>
               Register
-            </div>
-
-            <div
-              className="btn btn-primary mx-2"
-              onClick={() => navigate("/login")}
-            >
-              Login
             </div>
           </form>
         </div>

@@ -20,17 +20,16 @@ const Login = () => {
   };
 
   const handleSubmit = async () => {
-    //console.log(user);
-
+    let getDatafromLocalstorage = JSON.parse(localStorage.getItem("userData"));
+    console.log(getDatafromLocalstorage);
     try {
       const { email, password } = user;
       if (email && password) {
         const docSnap = await getDoc(doc(db, "users", user.email));
         const userData = docSnap.data();
-        console.log(userData);
-        console.log(userData.email);
-        console.log(userData.password);
+        // console.log(userData);
         if (userData.email === email && userData.password === password) {
+          alert("Login Successfully");
           navigate("/mails");
         } else {
           alert("Email and password do not match");
@@ -76,12 +75,6 @@ const Login = () => {
 
           <div className="btn btn-primary mx-2" onClick={handleSubmit}>
             Login
-          </div>
-          <div
-            className="btn btn-primary mx-2"
-            onClick={() => navigate("/register")}
-          >
-            Register
           </div>
         </form>
       </div>

@@ -1,26 +1,35 @@
-//import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import React from "react";
-//import { db } from "../../firebase.config";
-import { useParams } from "react-router";
+import { useEffect } from "react";
+import { db } from "../../firebase.config";
 
 const EmailList = () => {
-  let { id } = useParams();
-  // const getEmails = async () => {
-  //   const allMails = collection(db, "users");
-  //   // await setDoc(doc(usersRef, email), {
-  //   //   user: ,
-  //   // });
-  //   const snapshot = await getDocs(allMails);
-  //   const result = snapshot.docs.map((doc) => doc.data());
-  //   console.log(result);
-  //   return result;
-  // };
+  const getUser = async () => {
+    try {
+      const docSnap = await getDoc(doc(db, "mails", "test@gmail.com"));
+      console.log(docSnap.data());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
-    <div>
-      <h3>Email list</h3>
-      {/* <button onClick={getEmails}>All emails</button> */}
-      <h2>ID: {id}</h2>
+    <div className="container">
+      <div className="d-grid gap-2 d-md-flex justify-content-md-start">
+        <button className="btn btn-primary me-md-2" type="button">
+          Send Mail
+        </button>
+        <button className="btn btn-primary" type="button">
+          compose Mail
+        </button>
+        <button className="btn btn-primary" type="button">
+          All Mails
+        </button>
+      </div>
     </div>
   );
 };
