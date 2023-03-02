@@ -1,38 +1,28 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
+// import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
+// import { useEffect } from "react";
+
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import UserContext from "../context/UserContext";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    password: "",
-    phone: "",
-  });
-
-  //handleChange
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
+  const userData = useContext(UserContext);
+  const { handleChange, user } = userData;
 
   //track for userDetail using useeffect
   useEffect(() => {
     localStorage.setItem("userData", JSON.stringify(user));
   }, [user]);
 
-  const mail = {
-    body: "test mail",
-    subject: "test",
-  };
+  // const mail = {
+  //   body: "test mail",
+  //   subject: "test",
+  // };
+
   //Register the user in firebase
   const handleRegister = async () => {
     try {
@@ -40,7 +30,7 @@ const Register = () => {
       if (fname && lname && email && password && phone) {
         await setDoc(doc(db, "users", user.email), user);
 
-        await setDoc(doc(db, "mails", user.email), mail);
+        await setDoc(doc(db, "mails", user.email), {});
 
         navigate("/login");
       } else {
@@ -64,7 +54,6 @@ const Register = () => {
               <input
                 type="text"
                 name="fname"
-                value={user.fname}
                 className="form-control"
                 onChange={handleChange}
               />
@@ -75,7 +64,6 @@ const Register = () => {
               <input
                 type="text"
                 name="lname"
-                value={user.lname}
                 className="form-control"
                 onChange={handleChange}
               />
@@ -86,7 +74,6 @@ const Register = () => {
               <input
                 type="number"
                 name="phone"
-                value={user.phone}
                 className="form-control"
                 onChange={handleChange}
               />
@@ -96,7 +83,6 @@ const Register = () => {
               <input
                 type="email"
                 name="email"
-                value={user.email}
                 className="form-control"
                 onChange={handleChange}
               />
@@ -108,7 +94,6 @@ const Register = () => {
                 type="password"
                 name="password"
                 className="form-control"
-                value={user.password}
                 onChange={handleChange}
               />
             </div>

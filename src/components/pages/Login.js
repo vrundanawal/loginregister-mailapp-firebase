@@ -1,23 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
 import { getDoc, doc } from "firebase/firestore";
+import UserContext from "../context/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
+  const userDetails = useContext(UserContext);
+  const { user } = userDetails;
 
   const handleSubmit = async () => {
     let getDatafromLocalstorage = JSON.parse(localStorage.getItem("userData"));
@@ -56,9 +47,8 @@ const Login = () => {
             <input
               type="email"
               name="email"
-              value={user.email}
               className="form-control"
-              onChange={handleChange}
+              onChange={userDetails.handleChange}
             />
 
             <label htmlFor="Password" className="form-label">
@@ -68,8 +58,7 @@ const Login = () => {
               type="password"
               name="password"
               className="form-control"
-              value={user.password}
-              onChange={handleChange}
+              onChange={userDetails.handleChange}
             />
           </div>
 
