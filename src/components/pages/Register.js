@@ -18,11 +18,6 @@ const Register = () => {
     localStorage.setItem("userData", JSON.stringify(user));
   }, [user]);
 
-  // const mail = {
-  //   body: "test mail",
-  //   subject: "test",
-  // };
-
   //Register the user in firebase
   const handleRegister = async () => {
     try {

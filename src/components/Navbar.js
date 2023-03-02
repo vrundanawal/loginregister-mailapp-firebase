@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
+    navigate("/");
   };
   return (
     <div className="mb-4 py-4">

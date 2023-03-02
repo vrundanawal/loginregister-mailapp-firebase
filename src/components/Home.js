@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Home = () => {
-  const [state, setState] = useState("test");
-  const changeState = () => {
-    setState("test12");
-  };
   return (
     <>
       <div className="p-5 mb-4 bg-light rounded-3">
@@ -15,7 +11,6 @@ const Home = () => {
             impedit officia tempora saepe itaque iusto inventore illum delectus!
             Nobis excepturi culpa error perferendis dolore earum?
           </p>
-          <button onClick={changeState}>change state {state}</button>
         </div>
       </div>
     </>

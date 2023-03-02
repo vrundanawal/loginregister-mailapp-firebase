@@ -1,12 +1,16 @@
 import { doc, getDoc } from "firebase/firestore";
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { db } from "../../firebase.config";
+import UserContext from "../context/UserContext";
 
 const EmailList = () => {
+  const userData = useContext(UserContext);
+  const userEmail = userData.user.email;
+  console.log(userEmail);
   const getUser = async () => {
     try {
-      const docSnap = await getDoc(doc(db, "mails", "test@gmail.com"));
+      const docSnap = await getDoc(doc(db, "mails", userEmail));
       console.log(docSnap.data());
     } catch (error) {
       console.log(error);
@@ -15,6 +19,7 @@ const EmailList = () => {
 
   useEffect(() => {
     getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
