@@ -2,3 +2,8 @@ users = {  'mailid': {    fname: '',    lname: '',    mailid: '',  �
   subject:'',
   body:''
 }]  }}
+
+
+
+const mails = { from :'', subject :'', body : '', isRead : false }
+mails/vrunda.nawal@gmail.com to address

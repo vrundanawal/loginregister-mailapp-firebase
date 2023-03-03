@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
-// import { useEffect } from "react";
-
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 const Register = () => {
   const navigate = useNavigate();
+  //create a state to show the error messages
+
   const userData = useContext(UserContext);
   const { handleChange, user } = userData;
 
@@ -23,9 +23,8 @@ const Register = () => {
     try {
       const { fname, lname, email, password, phone } = user;
       if (fname && lname && email && password && phone) {
-        await setDoc(doc(db, "users", user.email), user);
-
-        await setDoc(doc(db, "mails", user.email), {});
+        await setDoc(doc(db, "users", email), user);
+        await setDoc(doc(db, "mails", email), {});
 
         navigate("/login");
       } else {
@@ -52,6 +51,9 @@ const Register = () => {
                 className="form-control"
                 onChange={handleChange}
               />
+              {/* <div className="form-text" id="errormessage">
+                Please Enter your Email
+              </div> */}
 
               <label htmlFor="LName" className="form-label">
                 Last Name
