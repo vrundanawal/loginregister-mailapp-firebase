@@ -52,3 +52,9 @@ service firebase.storage {
 6)Iside the cloudStore :
 Data Tab :- Add the collections
 collection Id : listings
+
+
+
+07-03-2023
+1)Form validation
+npm install react-hook-form

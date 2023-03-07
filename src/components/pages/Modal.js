@@ -1,6 +1,67 @@
+import { setDoc, doc } from "firebase/firestore";
 import React from "react";
+//import { useContext } from "react";
+import { useState } from "react";
+//import UserContext from "../context/UserContext";
+import { db } from "../../firebase.config";
 
-const Modal = ({ open, onCloseModal }) => {
+const Modal = ({ open, onCloseModal, userEmail }) => {
+  //const userData = useContext(UserContext);
+  //const { user } = userData;
+  // const [mails, setMails] = useState({
+  //   from: "",
+  //   subject: "",
+  //   body: "",
+  //   isRead: false,
+  //   to: [],
+  // });
+
+  const [toAddress, setToAddress] = useState([]);
+  const [subject, setSubject] = useState("");
+  const [body, setBody] = useState("");
+
+  const handleChange = (e) => {
+    setBody(e.target.value);
+  };
+
+  const onChangeSubject = (e) => {
+    setSubject(e.target.value);
+  };
+
+  const onChangeToAddress = (e) => {
+    setToAddress([e.target.value]);
+  };
+
+  //send the mail and store into Db
+  const handleSendMail = () => {
+    const timeStamp = new Date().getTime().toString();
+
+    // console.log(subject, body, toAddress);
+    const mails = {
+      [timeStamp]: {
+        timeStamp,
+        from: userEmail,
+        subject,
+        body,
+        isRead: false,
+        to: toAddress,
+      },
+    };
+    console.log(mails);
+    //return false;
+    try {
+      if (toAddress.length > 0 && subject && body) {
+        toAddress.map(async (item) => {
+          await setDoc(doc(db, "mails", item), mails);
+        });
+      } else {
+        alert("All the fields are required");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!open) return null;
   return (
     <>
@@ -21,23 +82,35 @@ const Modal = ({ open, onCloseModal }) => {
             <div className="row">
               <label className="col-sm-2 ">To :</label>
               <div className="col-sm-10">
-                <input type="text" className="form-control-plaintext" />
+                <input
+                  type="text"
+                  onChange={onChangeToAddress}
+                  className="form-control-plaintext"
+                  name="to"
+                />
               </div>
 
               <label className="col-sm-2">Subject:</label>
               <div className="col-sm-10">
-                <input type="text" className="form-control-plaintext" />
+                <input
+                  type="text"
+                  className="form-control-plaintext"
+                  name="subject"
+                  onChange={onChangeSubject}
+                />
               </div>
               <textarea
-                name=""
+                name="body"
                 className="form-control-plaintext"
-                id=""
                 cols="30"
                 rows="5"
+                onChange={handleChange}
               ></textarea>
               <hr />
               <div>
-                <button className="btn btn-dark">Sent</button>
+                <button className="btn btn-dark" onClick={handleSendMail}>
+                  Sent
+                </button>
               </div>
             </div>
           </div>

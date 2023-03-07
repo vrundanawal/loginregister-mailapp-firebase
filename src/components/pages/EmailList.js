@@ -7,6 +7,7 @@ import Modal from "./Modal";
 
 const EmailList = () => {
   const userData = useContext(UserContext);
+  console.log(userData.user.email);
   //Create a state for modal
   const [openModal, setOpenModal] = useState(false);
 
@@ -36,14 +37,17 @@ const EmailList = () => {
           >
             Compose mail
           </button>
-          <Modal open={openModal} onCloseModal={() => setOpenModal(false)} />
+          <Modal
+            open={openModal}
+            onCloseModal={() => setOpenModal(false)}
+            userEmail={userData.user.email}
+          />
         </div>
         <div className="col-md-8 col-sm-12">
           <form>
             <div className="mb-3">
               <input
                 type="text"
-                name="fname"
                 className="form-control"
                 placeholder="Search mails"
               />
