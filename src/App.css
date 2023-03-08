@@ -8,3 +8,6 @@
 .valid-class {
   border: 2px solid green;
 }
+.showDiv {
+  display: none;
+}

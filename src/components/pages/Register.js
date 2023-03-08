@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 // import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
@@ -15,7 +15,7 @@ const Register = () => {
     trigger,
     formState: { errors },
     reset, //to set the value empty
-  } = useForm({ mode: "onChange" });
+  } = useForm();
   const navigate = useNavigate();
   //create a state to show the error messages
 
@@ -51,6 +51,14 @@ const Register = () => {
     <>
       <div className="bg-light rounded-3 col-md-6 mx-auto mt-5">
         <div className="container-fluid py-3">
+          <div className="showDiv">
+            <div className="card col-md-4 mx-auto p-3 bg-light">
+              <p>
+                <b className="text-success">Login successfully</b>
+              </p>
+            </div>
+          </div>
+
           <h5 className="fw-bold">Registration Form</h5>
           <form>
             <div className="mb-3">
@@ -74,7 +82,7 @@ const Register = () => {
                     message: "Maximum lenth is 15",
                   },
                   pattern: {
-                    value: /^[a-zA-Z0-9]+$/i,
+                    value: /^[a-zA-Z0-9]+$/,
                     message: "No Spacial character is allowded",
                   },
                 })}

@@ -1,4 +1,4 @@
-import { setDoc, doc } from "firebase/firestore";
+import { doc, addDoc, collection } from "firebase/firestore";
 import React from "react";
 //import { useContext } from "react";
 import { useState } from "react";
@@ -6,21 +6,11 @@ import { useState } from "react";
 import { db } from "../../firebase.config";
 
 const Modal = ({ open, onCloseModal, userEmail }) => {
-  //const userData = useContext(UserContext);
-  //const { user } = userData;
-  // const [mails, setMails] = useState({
-  //   from: "",
-  //   subject: "",
-  //   body: "",
-  //   isRead: false,
-  //   to: [],
-  // });
-
   const [toAddress, setToAddress] = useState([]);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
 
-  const handleChange = (e) => {
+  const onChangeBody = (e) => {
     setBody(e.target.value);
   };
 
@@ -35,24 +25,25 @@ const Modal = ({ open, onCloseModal, userEmail }) => {
   //send the mail and store into Db
   const handleSendMail = () => {
     const timeStamp = new Date().getTime().toString();
-
     // console.log(subject, body, toAddress);
     const mails = {
-      [timeStamp]: {
-        timeStamp,
-        from: userEmail,
-        subject,
-        body,
-        isRead: false,
-        to: toAddress,
-      },
+      //[timeStamp]: {
+      timeStamp,
+      from: userEmail,
+      subject,
+      body,
+      isRead: false,
+      to: toAddress,
+      //},
     };
     console.log(mails);
     //return false;
+
     try {
       if (toAddress.length > 0 && subject && body) {
         toAddress.map(async (item) => {
-          await setDoc(doc(db, "mails", item), mails);
+          const mailCollectionref = doc(db, "mails", item);
+          await addDoc(collection(mailCollectionref, timeStamp), mails);
         });
       } else {
         alert("All the fields are required");
@@ -104,7 +95,7 @@ const Modal = ({ open, onCloseModal, userEmail }) => {
                 className="form-control-plaintext"
                 cols="30"
                 rows="5"
-                onChange={handleChange}
+                onChange={onChangeBody}
               ></textarea>
               <hr />
               <div>
