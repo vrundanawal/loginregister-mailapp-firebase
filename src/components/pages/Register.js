@@ -8,7 +8,6 @@ import UserContext from "../context/UserContext";
 import { useForm } from "react-hook-form";
 
 const Register = () => {
-  const [hasError, setHasError] = useState(false);
   //get this methods from useFrom
   const {
     register,
@@ -16,7 +15,7 @@ const Register = () => {
     trigger,
     formState: { errors },
     reset, //to set the value empty
-  } = useForm();
+  } = useForm({ mode: "onChange" });
   const navigate = useNavigate();
   //create a state to show the error messages
 
@@ -61,8 +60,9 @@ const Register = () => {
               <input
                 type="text"
                 name="fname"
+                autoComplete="off"
                 //className="form-control"
-                className={`form-control ${errors.fname && "invalid"}`}
+                className={`form-control ${errors.fname && "invalid"} `}
                 {...register("fname", {
                   required: "Name is required",
                   minLength: {
@@ -74,13 +74,13 @@ const Register = () => {
                     message: "Maximum lenth is 15",
                   },
                   pattern: {
-                    value: /^[a-zA-Z0-9]+$/,
+                    value: /^[a-zA-Z0-9]+$/i,
                     message: "No Spacial character is allowded",
                   },
                 })}
-                onKeyUp={() => {
-                  trigger("fname");
-                }}
+                // onKeyUp={() => {
+                //   trigger("fname");
+                // }}
                 onChange={handleChange}
               />
               {errors.fname && (
@@ -98,6 +98,7 @@ const Register = () => {
               <input
                 type="text"
                 name="lname"
+                autoComplete="off"
                 //className="form-control"
                 className={`form-control ${errors.lname && "invalid"}`}
                 {...register("lname", {
@@ -131,6 +132,7 @@ const Register = () => {
               <input
                 type="number"
                 name="phone"
+                autoComplete="off"
                 //className="form-control"
                 className={`form-control ${errors.phone && "invalid"}`}
                 {...register(
@@ -160,6 +162,7 @@ const Register = () => {
               <input
                 type="email"
                 name="email"
+                autoComplete="off"
                 //className="form-control"
                 className={`form-control ${errors.email && "invalid"}`}
                 {...register("email", {
@@ -185,6 +188,7 @@ const Register = () => {
               <input
                 type="password"
                 name="password"
+                autoComplete="off"
                 //className="form-control"
                 className={`form-control ${errors.password && "invalid"}`}
                 {...register("password", {

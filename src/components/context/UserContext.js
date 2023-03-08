@@ -10,9 +10,11 @@ export const UserContextProvider = ({ children }) => {
     phone: "",
   });
 
+  //let hasError = false;
   //handleChange
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setUser({
       ...user,
       [name]: value,
