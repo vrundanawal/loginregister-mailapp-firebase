@@ -44,6 +44,7 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
         toAddress.map(async (item) => {
           const mailCollectionref = doc(db, "mails", item);
           await addDoc(collection(mailCollectionref, timeStamp), mails);
+          onCloseModal();
         });
       } else {
         alert("All the fields are required");
@@ -99,10 +100,7 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
               ></textarea>
               <hr />
               <div>
-                <button
-                  className="btn btn-dark"
-                  onClick={(handleSendMail, onCloseModal)}
-                >
+                <button className="btn btn-dark" onClick={handleSendMail}>
                   Sent
                 </button>
               </div>

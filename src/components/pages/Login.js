@@ -9,7 +9,6 @@ const Login = () => {
 
   const userDetails = useContext(UserContext);
   const { user } = userDetails;
-
   const handleSubmit = async () => {
     let getDatafromLocalstorage = JSON.parse(localStorage.getItem("userData"));
     console.log(getDatafromLocalstorage);
