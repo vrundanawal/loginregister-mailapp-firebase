@@ -5,7 +5,7 @@ import { useState } from "react";
 //import UserContext from "../context/UserContext";
 import { db } from "../../firebase.config";
 
-const Modal = ({ open, onCloseModal, userEmail }) => {
+const Modal = ({ openModal, onCloseModal, userEmail }) => {
   const [toAddress, setToAddress] = useState([]);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
@@ -53,7 +53,7 @@ const Modal = ({ open, onCloseModal, userEmail }) => {
     }
   };
 
-  if (!open) return null;
+  if (!openModal) return null;
   return (
     <>
       <div className="modal-dialog">
@@ -99,7 +99,10 @@ const Modal = ({ open, onCloseModal, userEmail }) => {
               ></textarea>
               <hr />
               <div>
-                <button className="btn btn-dark" onClick={handleSendMail}>
+                <button
+                  className="btn btn-dark"
+                  onClick={(handleSendMail, onCloseModal)}
+                >
                   Sent
                 </button>
               </div>

@@ -38,7 +38,7 @@ const EmailList = () => {
             Compose mail
           </button>
           <Modal
-            open={openModal}
+            openModal={openModal}
             onCloseModal={() => setOpenModal(false)}
             userEmail={userData.user.email}
           />
