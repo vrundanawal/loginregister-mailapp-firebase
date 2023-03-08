@@ -6,23 +6,30 @@ import Register from "./components/pages/Register";
 import NotFound from "./components/pages/NotFound";
 import Home from "./components/Home";
 import EmailList from "./components/pages/EmailList";
-import { useContext } from "react";
-import UserContext from "./components/context/UserContext";
-import ProtectedRoute from "./components/pages/ProtectedRoute";
+
+//import { useContext } from "react";
+//import UserContext from "./components/context/UserContext";
+//import ProtectedRoute from "./components/pages/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const userData = useContext(UserContext);
-  const { user } = userData;
+  //const userData = useContext(UserContext);
+  //const { user } = userData;
 
-  const handleLogin = () => user.setUser({ id: "1", name: "robin" });
-  const handleLogout = () => user.setUser(null);
   return (
     <>
-      {user ? (
-        <button onClick={handleLogout}>Sign Out</button>
-      ) : (
-        <button onClick={handleLogin}>Sign In</button>
-      )}
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Router>
         <Navbar />
         <Routes>
@@ -36,6 +43,7 @@ function App() {
               </ProtectedRoute>
             }
           /> */}
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/mails" element={<EmailList />} />

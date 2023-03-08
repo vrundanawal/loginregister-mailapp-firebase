@@ -12,7 +12,7 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    trigger,
+
     formState: { errors },
     reset, //to set the value empty
   } = useForm();
@@ -124,9 +124,9 @@ const Register = () => {
                     message: "No Spacial character is allowded",
                   },
                 })}
-                onKeyUp={() => {
-                  trigger("lname");
-                }}
+                // onKeyUp={() => {
+                //   trigger("lname");
+                // }}
                 onChange={handleChange}
               />
               {errors.lname && (
@@ -155,9 +155,9 @@ const Register = () => {
                     },
                   }
                 )}
-                onKeyUp={() => {
-                  trigger("phone");
-                }}
+                // onKeyUp={() => {
+                //   trigger("phone");
+                // }}
                 onChange={handleChange}
               />
               {errors.phone && (
@@ -180,9 +180,9 @@ const Register = () => {
                     message: "Invalid email address",
                   },
                 })}
-                onKeyUp={() => {
-                  trigger("email");
-                }}
+                // onKeyUp={() => {
+                //   trigger("email");
+                // }}
                 onChange={handleChange}
               />
               {/* <div className="form-text">Please Enter your Email</div> */}
@@ -207,9 +207,9 @@ const Register = () => {
                       "The password must contain 1 lowerCase character, one number, one special character, and length 5 or more ",
                   },
                 })}
-                onKeyUp={() => {
-                  trigger("password");
-                }}
+                // onKeyUp={() => {
+                //   trigger("password");
+                // }}
                 onChange={handleChange}
               />
               {errors.password && (

@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.clear();
+  const onLogout = (e) => {
+    e.preventDefault();
     navigate("/");
   };
   return (
@@ -18,20 +18,25 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="d-flex">
-            <Link to="/login" className="btn btn-dark  ">
+            <Link to="/login" className="btn btn-dark">
               Login
             </Link>
+
             <Link to="/register" className="btn btn-dark  ">
               Register
             </Link>
+            <Link to="/logout" className="btn btn-dark" onClick={onLogout}>
+              Logout
+            </Link>
+
             {/* {loggedIn && (
               <Link to="/logout" className="btn btn-dark  ">
                 Logout
               </Link>
             )} */}
-            <Link to="/" className="btn btn-dark " onClick={handleLogout}>
+            {/* <Link to="/" className="btn btn-dark " onClick={handleLogout}>
               Logout
-            </Link>
+            </Link> */}
           </div>
         </div>
       </nav>

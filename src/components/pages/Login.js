@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
 import { getDoc, doc } from "firebase/firestore";
 import UserContext from "../context/UserContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const userDetails = useContext(UserContext);
   const { user } = userDetails;
+  //create a state to show and hide the logout button
+
   const handleSubmit = async () => {
     let getDatafromLocalstorage = JSON.parse(localStorage.getItem("userData"));
     console.log(getDatafromLocalstorage);
@@ -19,8 +21,10 @@ const Login = () => {
         const userData = docSnap.data();
         // console.log(userData);
         if (userData.email === email && userData.password === password) {
-          alert("Login Successfully");
-          navigate("/mails");
+          toast.success("Login Successfully");
+          setTimeout(() => {
+            navigate("/mails");
+          }, 2000);
         } else {
           alert("Email and password do not match");
         }
