@@ -8,15 +8,20 @@ import Modal from "./Modal";
 const EmailList = () => {
   const userData = useContext(UserContext);
   console.log(userData.user.email);
+  //console.log(userData.user.fname);
   //Create a state for modal
   const [openModal, setOpenModal] = useState(false);
 
   const userEmail = userData.user.email;
-  console.log(userEmail);
+
   const getUser = async () => {
     try {
       const docSnap = await getDoc(doc(db, "mails", userEmail));
+      //const docSnapUser = await getDoc(doc(db, "users", userEmail));
       console.log(docSnap.data());
+
+      //const firstName = docSnapUser.data();
+      //console.log(firstName.fname);
     } catch (error) {
       console.log(error);
     }
