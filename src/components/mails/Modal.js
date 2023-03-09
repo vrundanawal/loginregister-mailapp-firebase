@@ -2,6 +2,7 @@ import { doc, addDoc, collection } from "firebase/firestore";
 import React from "react";
 //import { useContext } from "react";
 import { useState } from "react";
+import { db } from "../../firebase.config";
 //import UserContext from "../context/UserContext";
 //import { db } from "../../../firebase.config";
 
@@ -42,8 +43,8 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
     try {
       if (toAddress.length > 0 && subject && body) {
         toAddress.map(async (item) => {
-          //const mailCollectionref = doc(db, "mails", item);
-          //await addDoc(collection(mailCollectionref, timeStamp), mails);
+          const mailCollectionref = doc(db, "mails", item);
+          await addDoc(collection(mailCollectionref, timeStamp), mails);
           onCloseModal();
         });
       } else {

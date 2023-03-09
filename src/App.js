@@ -20,7 +20,7 @@ function App() {
     <>
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -46,7 +46,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          <Route path="/mails" element={<EmailList />} />
+          {/* <Route path="/mails" element={<EmailList />} /> */}
+          <Route path="/mails" element={<Login />} />
           {/* <Route path="/:id" element={<EmailList />} /> */}
           <Route path="/*" element={<NotFound />} />
         </Routes>

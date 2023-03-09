@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 //import UserContext from "../../context/UserContext";
 import Modal from "./Modal";
 
-const EmailList = () => {
+const EmailList = ({ email }) => {
+  console.log(email);
   //const userData = useContext(UserContext);
   //console.log(userData.user.email);
   //console.log(userData.user.fname);
@@ -33,34 +34,36 @@ const EmailList = () => {
   // }, []);
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-4 col-sm-12">
-          <button
-            className="btn btn-primary"
-            onClick={() => setOpenModal(true)}
-          >
-            Compose mail
-          </button>
-          <Modal
-            openModal={openModal}
-            onCloseModal={() => setOpenModal(false)}
-            // userEmail={userData.user.email}
-          />
-        </div>
-        <div className="col-md-8 col-sm-12">
-          <form>
-            <div className="mb-3">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search mails"
-              />
-            </div>
-          </form>
+    <>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4 col-sm-12">
+            <button
+              className="btn btn-primary"
+              onClick={() => setOpenModal(true)}
+            >
+              Compose mail
+            </button>
+            <Modal
+              openModal={openModal}
+              onCloseModal={() => setOpenModal(false)}
+              userEmail={email}
+            />
+          </div>
+          <div className="col-md-8 col-sm-12">
+            <form>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search mails"
+                />
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
