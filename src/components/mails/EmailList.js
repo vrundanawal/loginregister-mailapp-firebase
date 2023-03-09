@@ -1,36 +1,36 @@
 import { doc, getDoc } from "firebase/firestore";
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
-import { db } from "../../firebase.config";
-import UserContext from "../context/UserContext";
+//import { db } from "../../../firebase.config";
+//import UserContext from "../../context/UserContext";
 import Modal from "./Modal";
 
 const EmailList = () => {
-  const userData = useContext(UserContext);
-  console.log(userData.user.email);
+  //const userData = useContext(UserContext);
+  //console.log(userData.user.email);
   //console.log(userData.user.fname);
   //Create a state for modal
   const [openModal, setOpenModal] = useState(false);
 
-  const userEmail = userData.user.email;
+  //const userEmail = userData.user.email;
 
-  const getUser = async () => {
-    try {
-      const docSnap = await getDoc(doc(db, "mails", userEmail));
-      //const docSnapUser = await getDoc(doc(db, "users", userEmail));
-      console.log(docSnap.data());
+  // const getUser = async () => {
+  //   try {
+  //     const docSnap = await getDoc(doc(db, "mails", userEmail));
+  //     const docSnapUser = await getDoc(doc(db, "users", userEmail));
+  //     console.log(docSnap.data());
 
-      //const firstName = docSnapUser.data();
-      //console.log(firstName.fname);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     const firstName = docSnapUser.data();
+  //     console.log(firstName.fname);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getUser();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className="container">
@@ -45,7 +45,7 @@ const EmailList = () => {
           <Modal
             openModal={openModal}
             onCloseModal={() => setOpenModal(false)}
-            userEmail={userData.user.email}
+            // userEmail={userData.user.email}
           />
         </div>
         <div className="col-md-8 col-sm-12">
