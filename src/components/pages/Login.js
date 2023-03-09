@@ -70,7 +70,7 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.danger("User does not exit");
+      toast.error("User does not exit");
     }
   };
 

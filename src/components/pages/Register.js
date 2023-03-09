@@ -53,21 +53,39 @@ const Register = () => {
     switch (name) {
       case "fname":
         setFirstName(value);
-        setFnameError(value ? "" : "Please Enter your name");
+        setFnameError(
+          value
+            ? /[a-zA-Z]+([_ -]?[a-zA-Z]){3,40}$/.test(value)
+              ? ""
+              : "Minimum 3 letters are required,no special characters and numbers allowed"
+            : "Please enter the text"
+        );
         break;
       case "lname":
         setLastName(value);
-        setlnameError(value ? "" : "Please Enter your name");
+        setlnameError(
+          value
+            ? /[a-zA-Z]+([_ -]?[a-zA-Z]){3,40}$/.test(value)
+              ? ""
+              : "Minimum 3 letters are required,no special characters and numbers allowed"
+            : "Please Enter your name"
+        );
         break;
       case "phone":
         setPhone(value);
-        setPhoneError(value ? "" : "Please Enter your number");
+        setPhoneError(
+          value
+            ? /^[0-9]{10}$/.test(value)
+              ? ""
+              : "Only numbers with 10 digits allow"
+            : "Please Enter your number"
+        );
         break;
       case "email":
         setEmail(value);
         setEmailError(
           value
-            ? /\S+@\S+\.\S+/.test(value)
+            ? /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
               ? ""
               : "Please enter a valid email address"
             : "Please enter your email address."
@@ -77,7 +95,7 @@ const Register = () => {
         setPassword(value);
         setPasswordError(
           value
-            ? value.length < 5
+            ? value.length < 6
               ? "Password must be at least 6 characters long."
               : ""
             : "Please enter your password."
@@ -136,7 +154,9 @@ const Register = () => {
                 onChange={handleInputChange}
               />
 
-              {fnameError && <div className="form-text">{fnameError}</div>}
+              {fnameError && (
+                <div className="form-text text-danger">{fnameError}</div>
+              )}
 
               <label htmlFor="LName" className="form-label">
                 Last Name
@@ -149,7 +169,9 @@ const Register = () => {
                 className="form-control"
                 onChange={handleInputChange}
               />
-              {lnameError && <div className="form-text">{lnameError}</div>}
+              {lnameError && (
+                <div className="form-text text-danger">{lnameError}</div>
+              )}
               <label htmlFor="Phone number" className="form-label">
                 Phone number
               </label>
@@ -161,7 +183,9 @@ const Register = () => {
                 className="form-control"
                 onChange={handleInputChange}
               />
-              {phoneError && <div className="form-text">{phoneError}</div>}
+              {phoneError && (
+                <div className="form-text text-danger">{phoneError}</div>
+              )}
               <label htmlFor="Email" className="form-label">
                 Email
               </label>
@@ -173,7 +197,9 @@ const Register = () => {
                 className="form-control"
                 onChange={handleInputChange}
               />
-              {emailError && <div className="form-text">{emailError}</div>}
+              {emailError && (
+                <div className="form-text text-danger">{emailError}</div>
+              )}
               <label htmlFor="Password" className="form-label">
                 Password
               </label>
@@ -186,7 +212,7 @@ const Register = () => {
                 onChange={handleInputChange}
               />
               {passwordError && (
-                <div className="form-text">{passwordError}</div>
+                <div className="form-text text-danger">{passwordError}</div>
               )}
             </div>
 
