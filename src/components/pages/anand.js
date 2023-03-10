@@ -7,59 +7,28 @@ import { toast } from "react-toastify";
 import { useContext } from "react";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [isFormValid, setIsFormValid] = useState(false);
+  const navigate = useNavigate();
+
   const [_email, _setEmail] = useState("");
   const [_password, _setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-
   const userData = useContext(UserContext);
   const { email, setEmail } = userData;
 
   useEffect(() => {
-    setIsFormValid(_email && _password && !emailError && !passwordError);
+    setIsFormValid(email && password && !emailError && !passwordError);
     return () => {
-      setIsFormValid({}); // This worked for me
+      setIsFormValid({});
     };
-  }, [_email, _password, emailError, passwordError]);
+  }, [email, password, emailError, passwordError]);
 
   const handleInputChangeEamil = (e) => {
-    const { name, value } = e.target;
-    switch (name) {
-      case "email":
-        _setEmail(value);
-        setEmailError(
-          value
-            ? /\S+@\S+\.\S+/.test(value)
-              ? ""
-              : "Please enter a valid email address"
-            : "Please enter your email address."
-        );
-        break;
-      default:
-        break;
-    }
+    _setEmail(e.target.value);
   };
 
   const handleInputChangePwd = (e) => {
-    const { name, value } = e.target;
-    switch (name) {
-      case "password":
-        _setPassword(value);
-        setEmailError(
-          value
-            ? value.length < 5
-              ? "Password must be at least 6 characters long."
-              : ""
-            : "Please enter your password."
-        );
-        break;
-      default:
-        break;
-    }
+    _setPassword(e.target.value);
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -71,8 +40,7 @@ const Login = () => {
         console.log(user);
         if (user.password === _password) {
           toast.success("Login Successfully");
-          // setEmail(_email);
-          setEmail(user);
+          setEmail(_email);
           navigate("/mails");
         } else {
           toast.error("Email and password do not match");
