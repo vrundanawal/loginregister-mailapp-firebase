@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
-  // const onLogout = (e) => {
-  //   e.preventDefault();
-  //   navigate("/");
-  // };
 
   return (
     <>
@@ -20,22 +15,17 @@ const Navbar = () => {
               </Link>
             </div>
             <div className="d-flex">
-              {/* <Link to="/login" className="btn btn-dark">
+              <Link to="/login" className="btn btn-dark">
                 Login
-              </Link> */}
-              <button
-                className="btn btn-dark"
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </button>
+              </Link>
 
-              <button
-                className="btn btn-dark"
-                onClick={() => navigate("/register")}
-              >
+              <Link to="/register" className="btn btn-dark">
                 Register
-              </button>
+              </Link>
+
+              <Link to="/" className="btn btn-dark" style={{ display: "none" }}>
+                Logout
+              </Link>
             </div>
           </div>
         </nav>

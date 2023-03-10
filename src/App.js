@@ -11,7 +11,7 @@ import UserContext from "./components/context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-//import EmailList from "./components/mails/EmailList";
+import EmailList from "./components/mails/EmailList";
 
 function App() {
   const userData = useContext(UserContext);
@@ -34,7 +34,7 @@ function App() {
       />
 
       <Router>
-        <Navbar />
+        <Navbar email={email} />
         <Routes>
           <Route path="/" element={<Home />} />
           {/*
@@ -49,8 +49,8 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
-          {/* <Route path="/mails" element={<EmailList />} /> */}
+          <Route path="/Logout" element={<Home />} />
+          <Route path="/mails" element={<EmailList email={email} />} />
           {/* <Route path="/mails" element={<Login />} /> */}
           {/* <Route path="/:id" element={<EmailList />} /> */}
           <Route path="/*" element={<NotFound />} />

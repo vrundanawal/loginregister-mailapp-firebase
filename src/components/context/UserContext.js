@@ -71,6 +71,7 @@ export const UserContextProvider = ({ children }) => {
         break;
     }
   };
+
   return (
     <UserContext.Provider
       value={{
@@ -84,6 +85,11 @@ export const UserContextProvider = ({ children }) => {
         phoneError,
         emailError,
         passwordError,
+        setFirstName,
+        setLastName,
+        setPhone,
+        setEmail,
+        setPassword,
         handleInputChange,
       }}
     >

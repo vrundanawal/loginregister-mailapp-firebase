@@ -23,6 +23,11 @@ const Register = () => {
     emailError,
     passwordError,
     handleInputChange,
+    setFirstName,
+    setLastName,
+    setPhone,
+    setEmail,
+    setPassword,
   } = userData;
 
   useEffect(() => {
@@ -64,9 +69,12 @@ const Register = () => {
       await setDoc(doc(db, "mails", email), {});
 
       toast.success("User detail stored successfully!");
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
+      navigate("/login");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPhone("");
+      setPassword("");
     } else {
       toast.error("Please fill out all fields correctly");
     }

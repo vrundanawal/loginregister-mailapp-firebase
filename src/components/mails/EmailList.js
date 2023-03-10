@@ -1,30 +1,30 @@
 import { doc, getDoc } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { db } from "../../firebase.config";
 //import UserContext from "../../context/UserContext";
 import Modal from "./Modal";
 
 const EmailList = ({ email }) => {
-  console.log(email);
-
   const [openModal, setOpenModal] = useState(false);
+  //const userData = useContext(UserContext);
+  //console.log(userData);
 
-  const getUser = async () => {
-    try {
-      const docSnap = await getDoc(doc(db, "mails", email));
-      const docSnapUser = await getDoc(doc(db, "users", email));
-      console.log(docSnap.data());
-      const firstName = docSnapUser.data();
-      console.log(firstName.fname);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getUser = async () => {
+  //   try {
+  //     const docSnap = await getDoc(doc(db, "mails", email));
+  //     const docSnapUser = await getDoc(doc(db, "users", email));
+  //     console.log(docSnap.data());
+  //     const firstName = docSnapUser.data();
+  //     console.log(firstName.fname);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getUser();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <>
