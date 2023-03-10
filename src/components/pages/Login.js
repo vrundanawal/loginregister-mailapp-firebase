@@ -2,48 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
 import { getDoc, doc } from "firebase/firestore";
-//import UserContext from "../context/UserContext";
+import UserContext from "../context/UserContext";
 import { toast } from "react-toastify";
 import EmailList from "../mails/EmailList";
+import { useContext } from "react";
 
 const Login = () => {
-  const navigate = useNavigate();
-  // const userDetails = useContext(UserContext);
-  // const { user } = userDetails;
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  //const navigate = useNavigate();
+  const userData = useContext(UserContext);
+  const { email, password, emailError, passwordError, handleInputChange } =
+    userData;
   const [isFormValid, setIsFormValid] = useState(false);
   const [success, setSuccess] = useState(false);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case "email":
-        setEmail(value);
-        setEmailError(
-          value
-            ? /\S+@\S+\.\S+/.test(value)
-              ? ""
-              : "Please enter a valid email address"
-            : "Please enter your email address."
-        );
-        break;
-      case "password":
-        setPassword(value);
-        setPasswordError(
-          value
-            ? value.length < 5
-              ? "Password must be at least 6 characters long."
-              : ""
-            : "Please enter your password."
-        );
-        break;
-      default:
-        break;
-    }
-  };
 
   useEffect(() => {
     setIsFormValid(email && password && !emailError && !passwordError);

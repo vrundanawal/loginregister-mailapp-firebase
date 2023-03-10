@@ -2,24 +2,28 @@ import React, { useState, useEffect } from "react";
 // import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
-//import { useContext } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-//import UserContext from "../context/UserContext";
+import UserContext from "../context/UserContext";
 
 const Register = () => {
-  const [fname, setFirstName] = useState("");
-  const [lname, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fnameError, setFnameError] = useState("");
-  const [lnameError, setlnameError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const navigate = useNavigate();
+  const userData = useContext(UserContext);
+  const {
+    fname,
+    lname,
+    phone,
+    email,
+    password,
+    fnameError,
+    lnameError,
+    phoneError,
+    emailError,
+    passwordError,
+    handleInputChange,
+  } = userData;
 
   useEffect(() => {
     setIsFormValid(
@@ -34,7 +38,7 @@ const Register = () => {
         !passwordError
     );
     return () => {
-      setIsFormValid({}); // This worked for me
+      setIsFormValid({});
     };
   }, [
     fname,
@@ -47,64 +51,9 @@ const Register = () => {
     passwordError,
     phoneError,
     emailError,
+    isFormValid,
   ]);
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case "fname":
-        setFirstName(value);
-        setFnameError(
-          value
-            ? /[a-zA-Z]+([_ -]?[a-zA-Z]){3,40}$/.test(value)
-              ? ""
-              : "Minimum 3 letters are required,no special characters and numbers allowed"
-            : "Please enter the text"
-        );
-        break;
-      case "lname":
-        setLastName(value);
-        setlnameError(
-          value
-            ? /[a-zA-Z]+([_ -]?[a-zA-Z]){3,40}$/.test(value)
-              ? ""
-              : "Minimum 3 letters are required,no special characters and numbers allowed"
-            : "Please Enter your name"
-        );
-        break;
-      case "phone":
-        setPhone(value);
-        setPhoneError(
-          value
-            ? /^[0-9]{10}$/.test(value)
-              ? ""
-              : "Only numbers with 10 digits allow"
-            : "Please Enter your number"
-        );
-        break;
-      case "email":
-        setEmail(value);
-        setEmailError(
-          value
-            ? /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
-              ? ""
-              : "Please enter a valid email address"
-            : "Please enter your email address."
-        );
-        break;
-      case "password":
-        setPassword(value);
-        setPasswordError(
-          value
-            ? value.length < 6
-              ? "Password must be at least 6 characters long."
-              : ""
-            : "Please enter your password."
-        );
-        break;
-      default:
-        break;
-    }
-  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (isFormValid) {
@@ -118,11 +67,6 @@ const Register = () => {
       setTimeout(() => {
         navigate("/login");
       }, 3000);
-      setLastName("");
-      setFirstName("");
-      setPhone("");
-      setEmail("");
-      setPassword("");
     } else {
       toast.error("Please fill out all fields correctly");
     }

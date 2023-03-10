@@ -5,16 +5,19 @@ import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import NotFound from "./components/pages/NotFound";
 import Home from "./components/Home";
-//import { useContext } from "react";
-//import UserContext from "./components/context/UserContext";
+import { useContext } from "react";
+import UserContext from "./components/context/UserContext";
 //import ProtectedRoute from "./components/pages/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import EmailList from "./components/mails/EmailList";
+
+//import EmailList from "./components/mails/EmailList";
 
 function App() {
-  //const userData = useContext(UserContext);
-  //const { user } = userData;
+  const userData = useContext(UserContext);
+  const { email } = userData;
+
+  console.log(email);
 
   return (
     <>
@@ -29,6 +32,7 @@ function App() {
         draggable
         pauseOnHover
       />
+
       <Router>
         <Navbar />
         <Routes>
@@ -47,7 +51,7 @@ function App() {
           <Route path="/register" element={<Register />} />
 
           {/* <Route path="/mails" element={<EmailList />} /> */}
-          <Route path="/mails" element={<Login />} />
+          {/* <Route path="/mails" element={<Login />} /> */}
           {/* <Route path="/:id" element={<EmailList />} /> */}
           <Route path="/*" element={<NotFound />} />
         </Routes>

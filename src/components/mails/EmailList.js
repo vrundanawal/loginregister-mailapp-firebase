@@ -1,40 +1,34 @@
 import { doc, getDoc } from "firebase/firestore";
-import React, { useContext } from "react";
 import { useState, useEffect } from "react";
-//import { db } from "../../../firebase.config";
+import { db } from "../../firebase.config";
 //import UserContext from "../../context/UserContext";
 import Modal from "./Modal";
 
 const EmailList = ({ email }) => {
   console.log(email);
-  //const userData = useContext(UserContext);
-  //console.log(userData.user.email);
-  //console.log(userData.user.fname);
-  //Create a state for modal
+
   const [openModal, setOpenModal] = useState(false);
 
-  //const userEmail = userData.user.email;
+  const getUser = async () => {
+    try {
+      const docSnap = await getDoc(doc(db, "mails", email));
+      const docSnapUser = await getDoc(doc(db, "users", email));
+      console.log(docSnap.data());
+      const firstName = docSnapUser.data();
+      console.log(firstName.fname);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // const getUser = async () => {
-  //   try {
-  //     const docSnap = await getDoc(doc(db, "mails", userEmail));
-  //     const docSnapUser = await getDoc(doc(db, "users", userEmail));
-  //     console.log(docSnap.data());
-
-  //     const firstName = docSnapUser.data();
-  //     console.log(firstName.fname);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getUser();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
+      <h2>Hello </h2>
       <div className="container">
         <div className="row">
           <div className="col-md-4 col-sm-12">

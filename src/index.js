@@ -5,13 +5,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-//import { UserContextProvider } from "./components/context/UserContext";
+import { UserContextProvider } from "./components/context/UserContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <UserContextProvider> */}
-    <App />
-    {/* </UserContextProvider> */}
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
