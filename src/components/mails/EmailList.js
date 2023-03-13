@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, collectionGroup, query, where } from "firebase/firestore";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
@@ -9,9 +9,6 @@ import UserEmails from "./UserEmails";
 const EmailList = ({ userDetails }) => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
-  //const userData = useContext(UserContext);
-  //console.log(userData);
-  console.log(userDetails);
 
   useEffect(() => {
     if (!userDetails.email) {
@@ -23,24 +20,13 @@ const EmailList = ({ userDetails }) => {
 
   const getUser = async () => {
     try {
-      const mailRef = doc(db, "mails", userDetails.email);
-      const docsSnap = await getDocs(mailRef);
-      docsSnap.forEach((doc) => {
-        console.log(doc.data());
+      const mailCollection = collection(db, 'mailsnew');
+      const q = query(mailCollection, where("to", "==", userDetails.email));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
       });
-
-      db.collection("mails/" + userDetails.email + "/DocSubCollectionName")
-        .get()
-        .then((subCollectionSnapshot) => {
-          subCollectionSnapshot.forEach((subDoc) => {
-            console.log(subDoc.data());
-          });
-        });
-      // console.log(doc(db, "mails", userDetails.email));
-      // const docSnap = await getDoc(doc(db, "mails", userDetails.email));
-      // const userEmails = docSnap.data();
-
-      //console.log(userEmails);
     } catch (error) {
       console.log(error);
     }
