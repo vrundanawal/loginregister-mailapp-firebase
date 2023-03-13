@@ -53,8 +53,42 @@ service firebase.storage {
 Data Tab :- Add the collections
 collection Id : listings
 
+1-03-2023
+1) Cookies and local storage and session storage
 
+2-03-2023
+1) Anand went to office. No call.
+1) I converted the app using Context-Api
+
+
+03-03-2023
+1) Working on logout functionality
+2) Compose mail feature explanation
+3)Regular Expression :- need to study
+4) BDD :- Test cases
+
+06-03-2023
+not feeling well. So take seek leave.
 
 07-03-2023
 1)Form validation
 npm install react-hook-form
+2) Update the code for form validation using react-form library.
+
+
+08-03-2023
+1) Send to functionality is done
+2) Added regular expression in registration form
+3) To show the success message used react toastify liabraby.
+
+09-03-2023
+1) No call : He went to office
+
+10-03-2023
+1)Pass the current user to context api.
+2) Work on disabled button with form validation
+
+11-03-2023
+1) Working on logout functionality
+
+

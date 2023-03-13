@@ -47,7 +47,7 @@ const Login = () => {
     switch (name) {
       case "password":
         _setPassword(value);
-        setEmailError(
+        setPasswordError(
           value
             ? value.length < 5
               ? "Password must be at least 6 characters long."
