@@ -55,7 +55,7 @@ const Register = () => {
         setFirstName(value);
         setFnameError(
           value
-            ? /[a-zA-Z]+([_ -]?[a-zA-Z]){3,40}$/.test(value)
+            ? /[a-zA-Z]+([_ -]?[a-zA-Z]){2,40}$/.test(value)
               ? ""
               : "Minimum 3 letters are required,no special characters and numbers allowed"
             : "Please enter the text"
@@ -65,7 +65,7 @@ const Register = () => {
         setLastName(value);
         setlnameError(
           value
-            ? /[a-zA-Z]+([_ -]?[a-zA-Z]){3,40}$/.test(value)
+            ? /[a-zA-Z]+([_ -]?[a-zA-Z]){2,40}$/.test(value)
               ? ""
               : "Minimum 3 letters are required,no special characters and numbers allowed"
             : "Please Enter your name"
@@ -77,7 +77,7 @@ const Register = () => {
           value
             ? /^[0-9]{10}$/.test(value)
               ? ""
-              : "Only numbers with 10 digits allow"
+              : "Only numbers and minimum 10 digits"
             : "Please Enter your number"
         );
         break;

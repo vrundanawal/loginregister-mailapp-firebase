@@ -1,4 +1,12 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  collectionGroup,
+  query,
+  where,
+} from "firebase/firestore";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
@@ -9,9 +17,6 @@ import UserEmails from "./UserEmails";
 const EmailList = ({ userDetails }) => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
-  //const userData = useContext(UserContext);
-  //console.log(userData);
-  console.log(userDetails);
 
   useEffect(() => {
     if (!userDetails.email) {
@@ -29,13 +34,14 @@ const EmailList = ({ userDetails }) => {
         console.log(doc.data());
       });
 
-      db.collection("mails/" + userDetails.email + "/DocSubCollectionName")
-        .get()
-        .then((subCollectionSnapshot) => {
-          subCollectionSnapshot.forEach((subDoc) => {
-            console.log(subDoc.data());
-          });
-        });
+      // db.collection("mails/" + userDetails.email + "/DocSubCollectionName")
+      //   .get()
+      //   .then((subCollectionSnapshot) => {
+      //     subCollectionSnapshot.forEach((subDoc) => {
+      //       console.log(subDoc.data());
+      //     });
+      //   });
+
       // console.log(doc(db, "mails", userDetails.email));
       // const docSnap = await getDoc(doc(db, "mails", userDetails.email));
       // const userEmails = docSnap.data();

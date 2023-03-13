@@ -92,4 +92,10 @@ npm install react-hook-form
 11-03-2023
 1) Working on logout functionality
 
+13-03-2023
+1) Completed the Logout functionality
+2) Created a protected route for mails component
+3) Trying to add more validation for email and password with regex
+
+
 

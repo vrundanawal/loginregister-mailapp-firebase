@@ -123,7 +123,6 @@ const Login = () => {
               type="submit"
               className="btn btn-primary mx-2"
               disabled={!isFormValid}
-              email={email}
             >
               Login
             </button>
