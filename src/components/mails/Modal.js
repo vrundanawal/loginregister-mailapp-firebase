@@ -33,8 +33,7 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
       from: userEmail,
       subject,
       body,
-      isRead: false,
-      to: toAddress,
+      isRead: false
       //},
     };
     console.log(mails);
@@ -43,8 +42,9 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
     try {
       if (toAddress.length > 0 && subject && body) {
         toAddress.map(async (item) => {
-          const mailCollectionref = doc(db, "mails", item);
-          await addDoc(collection(mailCollectionref, timeStamp), mails);
+          mails.to = item;
+          const mailCollectionref = collection(db, "mailsnew");
+          await addDoc(mailCollectionref, mails);
           onCloseModal();
         });
       } else {
