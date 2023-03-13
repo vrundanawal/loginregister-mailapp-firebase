@@ -28,7 +28,6 @@ const EmailList = ({ email }) => {
 
   return (
     <>
-      <h2>Hello </h2>
       <div className="container">
         <div className="row">
           <div className="col-md-4 col-sm-12">

@@ -1,17 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "./context/UserContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const userData = useContext(UserContext);
+  //const [email, setEmail] = useContext(UserContext);
 
-  const { email } = userData;
+  const { email, setEmail } = userData;
   console.log(email.email);
-  const userEmail = email.email;
 
   const handleLogOut = () => {
-    navigate("/logout");
+    navigate("/");
+    setEmail("");
   };
 
   return (
@@ -25,7 +26,7 @@ const Navbar = () => {
               </Link>
             </div>
             <div className="d-flex">
-              {!userEmail && userEmail === undefined ? (
+              {!email.email && email.email === undefined ? (
                 <>
                   <Link to="/login" className="btn btn-dark">
                     Login
@@ -53,7 +54,7 @@ const Navbar = () => {
                     >
                       <li>
                         <Link
-                          to="/logout"
+                          to="/"
                           className="dropdown-item"
                           onClick={handleLogOut}
                         >
