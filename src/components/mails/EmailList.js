@@ -1,25 +1,50 @@
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
 //import UserContext from "../../context/UserContext";
 import Modal from "./Modal";
+import UserEmails from "./UserEmails";
 
-const EmailList = ({ email }) => {
+const EmailList = ({ userDetails }) => {
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
   //const userData = useContext(UserContext);
   //console.log(userData);
+  console.log(userDetails);
 
-  // const getUser = async () => {
-  //   try {
-  //     const docSnap = await getDoc(doc(db, "mails", email));
-  //     const docSnapUser = await getDoc(doc(db, "users", email));
-  //     console.log(docSnap.data());
-  //     const firstName = docSnapUser.data();
-  //     console.log(firstName.fname);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  useEffect(() => {
+    if (!userDetails.email) {
+      navigate("/login");
+    } else {
+      getUser();
+    }
+  });
+
+  const getUser = async () => {
+    try {
+      const mailRef = doc(db, "mails", userDetails.email);
+      const docsSnap = await getDocs(mailRef);
+      docsSnap.forEach((doc) => {
+        console.log(doc.data());
+      });
+
+      db.collection("mails/" + userDetails.email + "/DocSubCollectionName")
+        .get()
+        .then((subCollectionSnapshot) => {
+          subCollectionSnapshot.forEach((subDoc) => {
+            console.log(subDoc.data());
+          });
+        });
+      // console.log(doc(db, "mails", userDetails.email));
+      // const docSnap = await getDoc(doc(db, "mails", userDetails.email));
+      // const userEmails = docSnap.data();
+
+      //console.log(userEmails);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // useEffect(() => {
   //   getUser();
@@ -30,7 +55,7 @@ const EmailList = ({ email }) => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-4 col-sm-12">
+          <div className="col-md-3 col-sm-12">
             <button
               className="btn btn-primary"
               onClick={() => setOpenModal(true)}
@@ -40,7 +65,7 @@ const EmailList = ({ email }) => {
             <Modal
               openModal={openModal}
               onCloseModal={() => setOpenModal(false)}
-              userEmail={email}
+              userEmail={userDetails.email}
             />
           </div>
           <div className="col-md-8 col-sm-12">
@@ -49,9 +74,10 @@ const EmailList = ({ email }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search mails"
+                  placeholder="Search in mails"
                 />
               </div>
+              <UserEmails userEmail={userDetails.email} />
             </form>
           </div>
         </div>

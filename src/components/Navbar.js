@@ -5,14 +5,13 @@ import UserContext from "./context/UserContext";
 const Navbar = () => {
   const navigate = useNavigate();
   const userData = useContext(UserContext);
-  //const [email, setEmail] = useContext(UserContext);
 
   const { email, setEmail } = userData;
-  console.log(email.email);
+  //console.log(email);
 
   const handleLogOut = () => {
-    navigate("/");
     setEmail("");
+    navigate("/");
   };
 
   return (

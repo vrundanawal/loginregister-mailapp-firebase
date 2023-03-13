@@ -41,7 +41,7 @@ function App() {
 
           <Route path="/register" element={<Register />} />
 
-          <Route path="/mails" element={<EmailList email={email} />} />
+          <Route path="/mails" element={<EmailList userDetails={email} />} />
           {/* <Route path="/mails" element={<Login />} /> */}
           {/* <Route path="/:id" element={<EmailList />} /> */}
           <Route path="/*" element={<NotFound />} />

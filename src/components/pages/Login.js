@@ -101,7 +101,9 @@ const Login = () => {
                 className="form-control"
                 onChange={handleInputChangeEamil}
               />
-              {emailError && <div className="form-text">{emailError}</div>}
+              {emailError && (
+                <div className="form-text text-danger">{emailError}</div>
+              )}
               <label htmlFor="Password" className="form-label">
                 Password
               </label>
@@ -113,7 +115,7 @@ const Login = () => {
                 onChange={handleInputChangePwd}
               />
               {passwordError && (
-                <div className="form-text">{passwordError}</div>
+                <div className="form-text text-danger">{passwordError}</div>
               )}
             </div>
 
