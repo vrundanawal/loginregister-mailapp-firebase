@@ -1,10 +1,7 @@
 import { doc, addDoc, collection } from "firebase/firestore";
 import React from "react";
-//import { useContext } from "react";
 import { useState } from "react";
 import { db } from "../../firebase.config";
-//import UserContext from "../context/UserContext";
-//import { db } from "../../../firebase.config";
 
 const Modal = ({ openModal, onCloseModal, userEmail }) => {
   const [toAddress, setToAddress] = useState([]);
@@ -27,6 +24,16 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
   const handleSendMail = () => {
     const timeStamp = new Date().getTime().toString();
     // console.log(subject, body, toAddress);
+    // const mails = {
+    //   //[timeStamp]: {
+    //   timeStamp,
+    //   from: userEmail,
+    //   subject,
+    //   body,
+    //   isRead: false,
+    //   to: toAddress,
+    //   //},
+    // };
     const mails = {
       //[timeStamp]: {
       timeStamp,
@@ -34,7 +41,6 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
       subject,
       body,
       isRead: false,
-      to: toAddress,
       //},
     };
     console.log(mails);
@@ -43,8 +49,10 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
     try {
       if (toAddress.length > 0 && subject && body) {
         toAddress.map(async (item) => {
-          const mailCollectionref = doc(db, "mails", item);
-          await addDoc(collection(mailCollectionref, timeStamp), mails);
+          mails.to = item;
+          //const mailCollectionref = doc(db, "mails", item);
+          const mailCollectionref = collection(db, "mailsnew");
+          await addDoc(mailCollectionref, mails);
           onCloseModal();
         });
       } else {

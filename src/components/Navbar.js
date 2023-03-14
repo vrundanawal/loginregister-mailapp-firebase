@@ -64,33 +64,6 @@ const Navbar = () => {
                   </div>
                 </>
               )}
-
-              {/* {userEmail && (
-                <>
-                  <div className="nav-item dropdown navbar-brand">
-                    <h2
-                      className="nav-link dropdown-toggle text-white"
-                      href="#"
-                      id="navbarDropdown"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      {email.fname}
-                    </h2>
-                    <ul
-                      className="dropdown-menu"
-                      aria-labelledby="navbarDropdown"
-                    >
-                      <li>
-                        <Link to="/" className="dropdown-item">
-                          Logout
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </>
-              )} */}
             </div>
           </div>
         </nav>

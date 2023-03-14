@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 // import { useState } from "react";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const Register = () => {
   const [fname, setFirstName] = useState("");
@@ -18,6 +17,10 @@ const Register = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +36,7 @@ const Register = () => {
         !passwordError
     );
     return () => {
-      setIsFormValid({}); // This worked for me
+      setIsFormValid({});
     };
   }, [
     fname,
@@ -54,7 +57,7 @@ const Register = () => {
       case "fname":
         setFirstName(value);
         setFnameError(
-          value
+          value.trim()
             ? /[a-zA-Z]+([_ -]?[a-zA-Z]){2,40}$/.test(value)
               ? ""
               : "Minimum 3 letters are required,no special characters and numbers allowed"
@@ -111,33 +114,55 @@ const Register = () => {
     if (isFormValid) {
       //submit the form data
       const user = { fname, lname, email, phone, password };
-      console.log(user);
-      await setDoc(doc(db, "users", email), user);
-      await setDoc(doc(db, "mails", email), {});
+      //console.log(user);
+      const docSnap = await getDoc(doc(db, "users", email));
+      const docSnapUser = docSnap.data();
+      console.log("get the details from database " + docSnapUser.email);
+      if (email === docSnapUser.email) {
+        setStatus(true);
+        setErrorMessage("User is alredy exists! Go to login");
 
-      toast.success("User detail stored successfully!");
-      navigate("/login");
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPhone("");
-      setPassword("");
+        //alert("User is alredy exists! Please Login");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      } else {
+        setStatus(true);
+        await setDoc(doc(db, "users", email), user);
+        //await setDoc(doc(db, "mails", email), {});
+        //setErrorMessage("User detail stored successfully!");
+        //toast.success("User detail stored successfully!");
+        setErrorMessage("User detail stored successfully!");
+        setTimeout(() => {
+          setFirstName("");
+          setLastName("");
+          setEmail("");
+          setPhone("");
+          setPassword("");
+          navigate("/login");
+        }, 2000);
+      }
+
+      //await setDoc(doc(db, "users", email), user);
+      // await setDoc(doc(db, "mails", email), {});
+
+      //toast.success("User detail stored successfully!");
+      //navigate("/login");
     } else {
-      toast.error("Please fill out all fields correctly");
+      alert("Please fill out all fields correctly");
     }
   };
   return (
     <>
       <div className="bg-light rounded-3 col-md-6 mx-auto mt-5">
-        <div className="container-fluid py-3">
-          <div className="showDiv">
-            <div className="card col-md-4 mx-auto p-3 bg-light">
-              <p>
-                <b className="text-success">Login successfully</b>
-              </p>
-            </div>
+        {status && (
+          <div className="card col-md-4 mx-auto p-3 bg-light">
+            <p>
+              <b className="text-success">{errorMessage}</b>
+            </p>
           </div>
-
+        )}
+        <div className="container-fluid py-3 ">
           <h5 className="fw-bold">Registration Form</h5>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">

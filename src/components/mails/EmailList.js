@@ -28,34 +28,18 @@ const EmailList = ({ userDetails }) => {
 
   const getUser = async () => {
     try {
-      const mailRef = doc(db, "mails", userDetails.email);
-      const docsSnap = await getDocs(mailRef);
-      docsSnap.forEach((doc) => {
+      const mailCollection = collection(db, "mailsnew");
+      const q = query(mailCollection, where("to", "==", userDetails.email));
+      const querySnapShot = await getDocs(q);
+      //console.log(querySnapShot);
+      querySnapShot.forEach((doc) => {
         console.log(doc.data());
+        console.log(doc.id, "=>", doc.data());
       });
-
-      // db.collection("mails/" + userDetails.email + "/DocSubCollectionName")
-      //   .get()
-      //   .then((subCollectionSnapshot) => {
-      //     subCollectionSnapshot.forEach((subDoc) => {
-      //       console.log(subDoc.data());
-      //     });
-      //   });
-
-      // console.log(doc(db, "mails", userDetails.email));
-      // const docSnap = await getDoc(doc(db, "mails", userDetails.email));
-      // const userEmails = docSnap.data();
-
-      //console.log(userEmails);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // useEffect(() => {
-  //   getUser();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <>

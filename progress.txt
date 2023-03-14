@@ -49,7 +49,7 @@ service firebase.storage {
   }
 }
 
-6)Iside the cloudStore :
+6)Inside the cloudStore :
 Data Tab :- Add the collections
 collection Id : listings
 
@@ -89,13 +89,16 @@ npm install react-hook-form
 2) Work on disabled button with form validation
 3) Learned about regular expression
 
-11-03-2023
-1) Working on logout functionality
 
 13-03-2023
 1) Completed the Logout functionality
 2) Created a protected route for mails component
 3) Trying to add more validation for email and password with regex
+
+
+14-03-2023
+1)Created new branch feature/emails-collection 
+2) 
 
 
 

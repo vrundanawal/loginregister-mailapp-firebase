@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
 import { getDoc, doc } from "firebase/firestore";
 import UserContext from "../context/UserContext";
-import { toast } from "react-toastify";
+
 import { useContext } from "react";
 
 const Login = () => {
@@ -70,17 +70,15 @@ const Login = () => {
         const user = docSnap.data();
         console.log(user);
         if (user.password === _password) {
-          toast.success("Login Successfully");
           // setEmail(_email);
           setEmail(user);
           navigate("/mails");
         } else {
-          toast.error("Email and password do not match");
+          alert("Email and password do not match");
         }
       }
     } catch (error) {
       console.log(error);
-      toast.error("User does not exit");
     }
   };
 

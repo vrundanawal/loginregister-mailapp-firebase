@@ -8,8 +8,6 @@ import Home from "./components/Home";
 import { useContext } from "react";
 import UserContext from "./components/context/UserContext";
 //import ProtectedRoute from "./components/pages/ProtectedRoute";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import EmailList from "./components/mails/EmailList";
 function App() {
@@ -20,18 +18,6 @@ function App() {
 
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-
       <Router>
         <Navbar email={email} />
         <Routes>
