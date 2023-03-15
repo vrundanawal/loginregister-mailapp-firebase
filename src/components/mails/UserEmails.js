@@ -1,55 +1,20 @@
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limit,
-  startAfter,
-} from "firebase/firestore";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { db } from "../../firebase.config";
-
-const UserEmails = ({ userEmail }) => {
-  const [listings, setListings] = useState(null);
-
-  //   useEffect(() => {
-  //     const fetchingEmailList = async () => {
-  //       try {
-  //         //get the reference
-  //         const emailRef = collection(db, "mails");
-
-  //         //create a queary
-  //         const q = query(
-  //           emailRef,
-  //           where("type", "==", userEmail.email)
-  //           //   orderBy("timestamp", "desc"),
-  //           //   limit(10)
-  //         );
-  //         console.log(q);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-  //     fetchingEmailList();
-  //   }, [userEmail.email]);
-
+const UserEmails = ({ emailListings }) => {
+  console.log(emailListings);
   return (
-    <table className="table table-hover">
-      <thead>
-        <tr>
-          <th>Sender</th>
-          <th>Title</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John</td>
-          <td>john@example.com</td>
-        </tr>
-      </tbody>
-    </table>
+    <>
+      <table className="table table-hover">
+        <tbody>
+          {emailListings.map((user, index) => (
+            <tr key={index}>
+              <td>{user.from}</td>
+              <td>{user.subject}</td>
+
+              <td>{user.body}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 };
 

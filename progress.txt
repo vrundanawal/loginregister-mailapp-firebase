@@ -98,7 +98,11 @@ npm install react-hook-form
 
 14-03-2023
 1)Created new branch feature/emails-collection 
-2) 
+2) tries to get all emails for particular user
+
+
+15-03-2023
+1)
 
 
 

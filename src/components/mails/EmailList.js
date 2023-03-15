@@ -18,6 +18,12 @@ const EmailList = ({ userDetails }) => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
 
+  const [emailListings, setEmailListings] = useState();
+
+  // if (!userDetails.email) {
+  //   navigate("/login");
+  // }
+
   useEffect(() => {
     if (!userDetails.email) {
       navigate("/login");
@@ -31,11 +37,22 @@ const EmailList = ({ userDetails }) => {
       const mailCollection = collection(db, "mailsnew");
       const q = query(mailCollection, where("to", "==", userDetails.email));
       const querySnapShot = await getDocs(q);
-      //console.log(querySnapShot);
+      const lists = [];
       querySnapShot.forEach((doc) => {
-        console.log(doc.data());
-        console.log(doc.id, "=>", doc.data());
+        //console.log(doc.data());
+        lists.push(doc.data());
+        //console.log(doc.id, "=>", doc.data());
       });
+      // setEmailListings(documents);
+      console.log(lists);
+
+      // querySnapShot.forEach((doc) => {
+      //   //console.log(doc.data());
+      //   const document = { [doc.id]: doc.data() };
+      //   documents.push(document);
+      //   //console.log(doc.id, "=>", doc.data());
+      //   setEmailListings(documents);
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +62,7 @@ const EmailList = ({ userDetails }) => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-3 col-sm-12">
+          <div className="col-md-4 col-sm-12">
             <button
               className="btn btn-primary"
               onClick={() => setOpenModal(true)}
@@ -67,7 +84,7 @@ const EmailList = ({ userDetails }) => {
                   placeholder="Search in mails"
                 />
               </div>
-              <UserEmails userEmail={userDetails.email} />
+              {/* <UserEmails emailListings={emailListings} /> */}
             </form>
           </div>
         </div>

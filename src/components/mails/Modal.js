@@ -109,7 +109,7 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
               ></textarea>
               <hr />
               <div>
-                <button className="btn btn-dark" onClick={handleSendMail}>
+                <button className="btn btn-primary" onClick={handleSendMail}>
                   Sent
                 </button>
               </div>

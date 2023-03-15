@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
-import { getDoc, doc } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  collection,
+  getDocs,
+  query,
+  where,
+  collectionGroup,
+} from "firebase/firestore";
 import UserContext from "../context/UserContext";
 
 import { useContext } from "react";
@@ -14,13 +22,16 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState(false);
+
   const userData = useContext(UserContext);
-  const { email, setEmail } = userData;
+  const { setEmail } = userData;
 
   useEffect(() => {
     setIsFormValid(_email && _password && !emailError && !passwordError);
     return () => {
-      setIsFormValid({}); // This worked for me
+      setIsFormValid({});
     };
   }, [_email, _password, emailError, passwordError]);
 
@@ -64,17 +75,35 @@ const Login = () => {
     event.preventDefault();
     try {
       if (isFormValid) {
-        // const user = { email, password };
-        //console.log(user);
+        // const userCollectionSnap = await getDocs(collection(db, "users"));
+
+        // userCollectionSnap.forEach((doc) => {
+        //   //console.log(doc.id, " => ", doc.data());
+        //   console.log(doc.data());
+        //   let email1 = doc.data();
+        //   //console.log(email1);
+
+        //   // if (email1 !== _email) {
+        //   //   alert("Email not match");
+        //   // }
+        // });
+
         const docSnap = await getDoc(doc(db, "users", _email));
         const user = docSnap.data();
-        console.log(user);
+        //console.log(user);
+
         if (user.password === _password) {
           // setEmail(_email);
+          setStatus(true);
           setEmail(user);
-          navigate("/mails");
+          setErrorMessage("User login Successfully");
+          setTimeout(() => {
+            navigate("/mails");
+          }, 1000);
+          // navigate("/mails");
         } else {
-          alert("Email and password do not match");
+          setStatus(true);
+          setErrorMessage("password do not match");
         }
       }
     } catch (error) {
@@ -85,6 +114,13 @@ const Login = () => {
   return (
     <>
       <div className="bg-light rounded-3 col-md-6 mx-auto mt-5">
+        {status && (
+          <div className="card col-md-4 mx-auto p-3 bg-light">
+            <p>
+              <b className="text-success">{errorMessage}</b>
+            </p>
+          </div>
+        )}
         <div className="container-fluid py-3">
           <h5 className="fw-bold">Login Form</h5>
           <form onSubmit={handleSubmit}>
