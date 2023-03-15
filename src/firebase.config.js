@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"; //to store the data into database
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDV-IVgGvfgs8pgPqv2zyrT3uyUXErPR1Y",
+  apiKey: "AIzaSyDV-IVgGvfgs8pgPqv2zyrT3uyUXErPR1Y1",
   authDomain: "loginregister-mailapp-52a5f.firebaseapp.com",
   projectId: "loginregister-mailapp-52a5f",
   storageBucket: "loginregister-mailapp-52a5f.appspot.com",

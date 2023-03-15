@@ -23,28 +23,14 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
   //send the mail and store into Db
   const handleSendMail = () => {
     const timeStamp = new Date().getTime().toString();
-    // console.log(subject, body, toAddress);
-    // const mails = {
-    //   //[timeStamp]: {
-    //   timeStamp,
-    //   from: userEmail,
-    //   subject,
-    //   body,
-    //   isRead: false,
-    //   to: toAddress,
-    //   //},
-    // };
     const mails = {
-      //[timeStamp]: {
       timeStamp,
       from: userEmail,
       subject,
       body,
       isRead: false,
-      //},
     };
-    console.log(mails);
-    //return false;
+    //console.log(mails);
 
     try {
       if (toAddress.length > 0 && subject && body) {

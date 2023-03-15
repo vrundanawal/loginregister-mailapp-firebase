@@ -1,13 +1,5 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  collectionGroup,
-  query,
-  where,
-} from "firebase/firestore";
-import { useState, useEffect, useContext } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
 //import UserContext from "../../context/UserContext";
@@ -15,14 +7,11 @@ import Modal from "./Modal";
 import UserEmails from "./UserEmails";
 
 const EmailList = ({ userDetails }) => {
+  console.log(userDetails);
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
 
-  const [emailListings, setEmailListings] = useState();
-
-  // if (!userDetails.email) {
-  //   navigate("/login");
-  // }
+  const [emailListings, setEmailListings] = useState([]);
 
   useEffect(() => {
     if (!userDetails.email) {
@@ -30,7 +19,7 @@ const EmailList = ({ userDetails }) => {
     } else {
       getUser();
     }
-  });
+  }, []);
 
   const getUser = async () => {
     try {
@@ -40,10 +29,11 @@ const EmailList = ({ userDetails }) => {
       const lists = [];
       querySnapShot.forEach((doc) => {
         //console.log(doc.data());
+        // console.log(doc.data().from);
         lists.push(doc.data());
         //console.log(doc.id, "=>", doc.data());
       });
-      // setEmailListings(documents);
+      setEmailListings(lists);
       console.log(lists);
 
       // querySnapShot.forEach((doc) => {
@@ -84,6 +74,7 @@ const EmailList = ({ userDetails }) => {
                   placeholder="Search in mails"
                 />
               </div>
+              <UserEmails emailListings={emailListings} />
               {/* <UserEmails emailListings={emailListings} /> */}
             </form>
           </div>

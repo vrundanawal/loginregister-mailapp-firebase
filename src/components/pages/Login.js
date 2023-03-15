@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
-import {
-  getDoc,
-  doc,
-  collection,
-  getDocs,
-  query,
-  where,
-  collectionGroup,
-} from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import UserContext from "../context/UserContext";
 
 import { useContext } from "react";
@@ -97,10 +89,10 @@ const Login = () => {
           setStatus(true);
           setEmail(user);
           setErrorMessage("User login Successfully");
-          setTimeout(() => {
-            navigate("/mails");
-          }, 1000);
-          // navigate("/mails");
+          // setTimeout(() => {
+          //   navigate("/mails");
+          // }, 1000);
+          navigate("/mails");
         } else {
           setStatus(true);
           setErrorMessage("password do not match");
