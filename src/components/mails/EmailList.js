@@ -12,6 +12,7 @@ const EmailList = ({ userDetails }) => {
   const navigate = useNavigate();
 
   const [emailListings, setEmailListings] = useState([]);
+  //const [id, setId] = useState([]);
 
   useEffect(() => {
     if (!userDetails.email) {
@@ -19,6 +20,7 @@ const EmailList = ({ userDetails }) => {
     } else {
       getUser();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getUser = async () => {
@@ -27,22 +29,18 @@ const EmailList = ({ userDetails }) => {
       const q = query(mailCollection, where("to", "==", userDetails.email));
       const querySnapShot = await getDocs(q);
       const lists = [];
+      //const IDS = [];
       querySnapShot.forEach((doc) => {
-        //console.log(doc.data());
-        // console.log(doc.data().from);
+        console.log(doc.id);
+        //lists.push(doc);
         lists.push(doc.data());
+        //IDS.push(doc.id);
         //console.log(doc.id, "=>", doc.data());
       });
-      setEmailListings(lists);
-      console.log(lists);
 
-      // querySnapShot.forEach((doc) => {
-      //   //console.log(doc.data());
-      //   const document = { [doc.id]: doc.data() };
-      //   documents.push(document);
-      //   //console.log(doc.id, "=>", doc.data());
-      //   setEmailListings(documents);
-      // });
+      setEmailListings(lists);
+      //setId(IDS);
+      //console.log(lists.length);
     } catch (error) {
       console.log(error);
     }
@@ -54,11 +52,21 @@ const EmailList = ({ userDetails }) => {
         <div className="row">
           <div className="col-md-4 col-sm-12">
             <button
-              className="btn btn-primary"
+              className="btn btn-primary m-2 mb-3"
               onClick={() => setOpenModal(true)}
             >
               Compose mail
             </button>
+
+            <br />
+            <button type="button" className="btn btn-primary position-relative">
+              Inbox
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {emailListings.length}
+                <span className="visually-hidden">unread messages</span>
+              </span>
+            </button>
+
             <Modal
               openModal={openModal}
               onCloseModal={() => setOpenModal(false)}
@@ -66,17 +74,7 @@ const EmailList = ({ userDetails }) => {
             />
           </div>
           <div className="col-md-8 col-sm-12">
-            <form>
-              <div className="mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search in mails"
-                />
-              </div>
-              <UserEmails emailListings={emailListings} />
-              {/* <UserEmails emailListings={emailListings} /> */}
-            </form>
+            <UserEmails emailListings={emailListings} />
           </div>
         </div>
       </div>

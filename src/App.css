@@ -11,3 +11,7 @@
 /* .showDiv {
   display: none;
 } */
+
+.bold {
+  font-weight: bold;
+}

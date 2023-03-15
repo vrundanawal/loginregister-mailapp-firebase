@@ -45,7 +45,7 @@ const Navbar = () => {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      {email.fname}
+                      {email.fname.toUpperCase()}
                     </h2>
                     <ul
                       className="dropdown-menu"

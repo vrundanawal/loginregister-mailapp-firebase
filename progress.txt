@@ -103,7 +103,7 @@ npm install react-hook-form
 
 15-03-2023
 1) Get all list of emails and display on the page.
-2)
-
+2) Added the bold class in email list
+3) Trying to undestand the implementation of cookies in that application
 
 
