@@ -106,4 +106,9 @@ npm install react-hook-form
 2) Added the bold class in email list
 3) Trying to undestand the implementation of cookies in that application
 
+16-03-2023
+1) Added the bold class dynamically for the emails
+2) Converted timestamp into data and time format for emails list
+3)
+
 

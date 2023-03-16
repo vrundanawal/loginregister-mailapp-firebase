@@ -39,8 +39,23 @@ const EmailList = ({ userDetails }) => {
       });
 
       setEmailListings(lists);
-      //setId(IDS);
-      //console.log(lists.length);
+
+      // querySnapShot.forEach((doc) => {
+      //   const ids = [doc.id];
+      //   //console.log(ids);
+      //   const userEmails = [doc.data()];
+      //   // console.log(userEmails);
+      //   //lists.push(doc);
+      //   for (var i = 0; i < userEmails.length; i++) {
+      //     // lists.push({id[i] : userEmails[i]})
+      //     lists.push({ [ids[i]]: userEmails[i] });
+      //   }
+      //   //console.log(lists);
+      //   setEmailListings(lists);
+      //   //lists.push(doc.data());
+      //   //IDS.push(doc.id);
+      //   //console.log(doc.id, "=>", doc.data());
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -63,6 +78,7 @@ const EmailList = ({ userDetails }) => {
               Inbox
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 {emailListings.length}
+
                 <span className="visually-hidden">unread messages</span>
               </span>
             </button>

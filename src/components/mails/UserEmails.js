@@ -22,6 +22,20 @@ const UserEmails = ({ emailListings }) => {
 
   //   []
   // );
+  // let timeStamp = 1678793645420;
+  const convertTimeStamp = (timeStamp) => {
+    var date = new Date(+timeStamp);
+    // console.log(date.toDateString());
+    // console.log(date.toDateString());
+    // console.log(date.getFullYear());
+    // console.log(date.getMinutes());
+    // console.log(date.getSeconds());
+    // console.log(date.getHours());
+    // console.log(date.toLocaleTimeString());
+
+    // return date.toDateString() + " " + date.toLocaleTimeString();
+    return date.toDateString();
+  };
 
   return (
     <>
@@ -40,7 +54,8 @@ const UserEmails = ({ emailListings }) => {
             <tr
               key={index}
               style={{ cursor: "pointer" }}
-              className={`bold `}
+              // className={`bold `}
+              className={user.isRead === false ? `bold` : "null"}
               //onClick={ShowEmail(user)}
               onClick={ShowEmail}
             >
@@ -48,10 +63,23 @@ const UserEmails = ({ emailListings }) => {
               <td>{user.subject}</td>
 
               <td>{user.body}</td>
+              <td>
+                {new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                }).format(user.timeStamp)}
+              </td>
+
+              {/* <td>{convertTimeStamp(user.timeStamp)}</td> */}
             </tr>
           ))}
         </tbody>
       </table>
+
       {showComp && <EmailComponet />}
     </>
   );
