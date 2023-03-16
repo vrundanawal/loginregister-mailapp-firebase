@@ -24,6 +24,9 @@ import {
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 
+10)cookies: npm i js-cookie
+
+
 
 
 

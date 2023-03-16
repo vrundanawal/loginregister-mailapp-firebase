@@ -17,7 +17,11 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
   };
 
   const onChangeToAddress = (e) => {
-    setToAddress([e.target.value]);
+    let text = e.target.value;
+    let multipleToAddresses = text.split(",");
+    //console.log(multipleToAddresses);
+
+    setToAddress(multipleToAddresses);
   };
 
   //send the mail and store into Db
@@ -35,7 +39,7 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
     try {
       if (toAddress.length > 0 && subject && body) {
         toAddress.map(async (item) => {
-          mails.to = item;
+          mails.to = item.trim();
           //const mailCollectionref = doc(db, "mails", item);
           const mailCollectionref = collection(db, "mailsnew");
           await addDoc(mailCollectionref, mails);
@@ -71,7 +75,7 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
               <div className="col-sm-10">
                 <input
                   type="text"
-                  onChange={onChangeToAddress}
+                  onBlur={onChangeToAddress}
                   className="form-control-plaintext"
                   name="to"
                 />

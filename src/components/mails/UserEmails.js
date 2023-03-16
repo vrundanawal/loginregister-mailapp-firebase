@@ -6,9 +6,7 @@ const UserEmails = ({ emailListings }) => {
 
   const [showComp, setShowComp] = useState(false);
 
-  const ShowEmail = (e) => {
-    e.preventDefault();
-
+  const ShowEmail = () => {
     setShowComp((prevState) => !prevState);
   };
 
@@ -55,9 +53,9 @@ const UserEmails = ({ emailListings }) => {
               key={index}
               style={{ cursor: "pointer" }}
               // className={`bold `}
-              className={user.isRead === false ? `bold` : "null"}
-              //onClick={ShowEmail(user)}
+              className={user.isRead === false ? "bold" : "null"}
               onClick={ShowEmail}
+              // onClick={ShowEmail}
             >
               <td>{user.from}</td>
               <td>{user.subject}</td>

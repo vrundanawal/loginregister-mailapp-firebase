@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
 import { getDoc, doc } from "firebase/firestore";
 import UserContext from "../context/UserContext";
-
 import { useContext } from "react";
+
+import Cookies from "js-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Login = () => {
 
   useEffect(() => {
     setIsFormValid(_email && _password && !emailError && !passwordError);
+    //readCookies();
     return () => {
       setIsFormValid({});
     };
@@ -86,6 +88,7 @@ const Login = () => {
 
         if (user.password === _password) {
           // setEmail(_email);
+          Cookies.set("user", _email);
           setStatus(true);
           setEmail(user);
           setErrorMessage("User login Successfully");

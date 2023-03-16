@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "./context/UserContext";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     setEmail("");
+    Cookies.remove("user");
     navigate("/");
   };
 

@@ -1,40 +1,74 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
 //import UserContext from "../../context/UserContext";
 import Modal from "./Modal";
 import UserEmails from "./UserEmails";
+import Cookies from "js-cookie";
+import UserContext from "../context/UserContext";
 
 const EmailList = ({ userDetails }) => {
   console.log(userDetails);
+  const userData = useContext(UserContext);
+  const { setEmail } = userData;
+
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
 
   const [emailListings, setEmailListings] = useState([]);
+
   //const [id, setId] = useState([]);
 
+  const readCookies = async () => {
+    const user = Cookies.get("user");
+    if (user) {
+      const docSnap = await getDoc(doc(db, "users", user));
+      const loginUserDetail = docSnap.data();
+      getMails(user);
+      setEmail(loginUserDetail);
+      //const user = docSnap.data();
+      navigate("/mails");
+    }
+  };
+
   useEffect(() => {
+    readCookies();
     if (!userDetails.email) {
       navigate("/login");
     } else {
-      getUser();
+      getMails(userDetails.email);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getUser = async () => {
+  const getMails = async (email) => {
     try {
       const mailCollection = collection(db, "mailsnew");
-      const q = query(mailCollection, where("to", "==", userDetails.email));
+      const q = query(mailCollection, where("to", "==", email));
       const querySnapShot = await getDocs(q);
       const lists = [];
       //const IDS = [];
       querySnapShot.forEach((doc) => {
         console.log(doc.id);
+        let emailData = doc.data();
+
+        emailData.id = doc.id;
         //lists.push(doc);
-        lists.push(doc.data());
+        lists.push(emailData);
+
+        // const a = doc.data();
+
+        //lists.push(doc.id, doc.data());
         //IDS.push(doc.id);
+        console.log(emailData);
         //console.log(doc.id, "=>", doc.data());
       });
 
@@ -78,7 +112,6 @@ const EmailList = ({ userDetails }) => {
               Inbox
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 {emailListings.length}
-
                 <span className="visually-hidden">unread messages</span>
               </span>
             </button>
