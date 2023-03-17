@@ -113,3 +113,10 @@ npm install react-hook-form
 4) Tries to applied different methods in array and object
 
 
+17-03-2023
+1) Updated with validation for register page if email is exists 
+2) If some error to type email address in login showing the Error messages
+
+
+
+

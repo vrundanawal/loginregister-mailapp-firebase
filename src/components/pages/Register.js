@@ -18,7 +18,7 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [status, setStatus] = useState(false);
 
   const navigate = useNavigate();
@@ -120,17 +120,17 @@ const Register = () => {
 
       if (docSnap.exists()) {
         //console.log("Document data:", docSnap.data());
-        setErrorMessage("User is alredy exists! Go to login");
+        setStatus(true);
+        setMessage("User is alredy exists! Go to login");
 
         setTimeout(() => {
           navigate("/login");
         }, 2000);
       } else {
-        // doc.data() will be undefined in this case
         console.log("No such document!");
         await setDoc(doc(db, "users", email), user);
         setStatus(true);
-        setErrorMessage("User detail stored successfully!");
+        setMessage("User detail stored successfully!");
         setTimeout(() => {
           setFirstName("");
           setLastName("");
@@ -140,37 +140,8 @@ const Register = () => {
           navigate("/login");
         }, 2000);
       }
-      //console.log("get the details from database " + docSnapUser.email);
-      // if (email === docSnapUser.email) {
-      //   setStatus(true);
-      //   setErrorMessage("User is alredy exists! Go to login");
-
-      //   //alert("User is alredy exists! Please Login");
-      //   setTimeout(() => {
-      //     navigate("/login");
-      //   }, 2000);
-      // } else {
-      //   setStatus(true);
-      //   // user.timestamp = serverTimestamp();
-      //   await setDoc(doc(db, "users", email), user);
-      //   //await setDoc(doc(db, "mails", email), {});
-      //   //setErrorMessage("User detail stored successfully!");
-      //   //toast.success("User detail stored successfully!");
-      //   setErrorMessage("User detail stored successfully!");
-      //   setTimeout(() => {
-      //     setFirstName("");
-      //     setLastName("");
-      //     setEmail("");
-      //     setPhone("");
-      //     setPassword("");
-      //     navigate("/login");
-      //   }, 2000);
-      // }
-
-      //toast.success("User detail stored successfully!");
-      //navigate("/login");
     } else {
-      alert("Please fill out all fields correctly");
+      setMessage("Please fill out all fields correctly");
     }
   };
   return (
@@ -179,7 +150,7 @@ const Register = () => {
         {status && (
           <div className="card col-md-4 mx-auto p-3 bg-light">
             <p>
-              <b className="text-success">{errorMessage}</b>
+              <b className="text-bold">{message}</b>
             </p>
           </div>
         )}

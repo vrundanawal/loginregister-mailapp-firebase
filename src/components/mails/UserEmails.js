@@ -1,25 +1,18 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserEmails = ({ emailListings }) => {
   console.log(emailListings);
+  //const [showComp, setShowComp] = useState(false);
 
-  const [showComp, setShowComp] = useState(false);
+  const navigate = useNavigate();
 
-  const ShowEmail = () => {
-    setShowComp((prevState) => !prevState);
+  const ShowEmail = (id) => {
+    console.log(id);
+    //setShowComp(true);
+    navigate(`/mail/${id}`);
+    // navigate(`/mail/${user.id}`);
   };
 
-  // const ShowEmail = useCallback(
-  //   (user) => () => {
-  //     console.log("UserEmail: ", user);
-  //     const email = user.from;
-  //     console.log(email);
-  //     setShowComp((prevState) => !prevState);
-  //   },
-
-  //   []
-  // );
-  // let timeStamp = 1678793645420;
   const convertTimeStamp = (timeStamp) => {
     var date = new Date(+timeStamp);
     // console.log(date.toDateString());
@@ -29,7 +22,6 @@ const UserEmails = ({ emailListings }) => {
     // console.log(date.getSeconds());
     // console.log(date.getHours());
     // console.log(date.toLocaleTimeString());
-
     // return date.toDateString() + " " + date.toLocaleTimeString();
     return date.toDateString();
   };
@@ -46,6 +38,14 @@ const UserEmails = ({ emailListings }) => {
         </div>
       </form>
       <table className="table table-hover">
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>Subject</th>
+            <th>Email Preview</th>
+            <th>Time</th>
+          </tr>
+        </thead>
         <tbody>
           {emailListings.map((user) => (
             <tr
@@ -53,11 +53,13 @@ const UserEmails = ({ emailListings }) => {
               style={{ cursor: "pointer" }}
               // className={`bold `}
               className={user.isRead === false ? "bold" : "null"}
-              onClick={ShowEmail}
-              // onClick={ShowEmail}
+              onClick={() => ShowEmail(user.id)}
+              // onClick={() => ShowEmail(user)}
             >
-              <td>{user.from}</td>
-              {/* <td>{user.fname}</td> */}
+              {/* <td>{user.from}</td> */}
+              <td>
+                {user.fname} {user.lname}
+              </td>
               <td>{user.subject}</td>
 
               <td>{user.body}</td>
@@ -77,8 +79,6 @@ const UserEmails = ({ emailListings }) => {
           ))}
         </tbody>
       </table>
-
-      {showComp && <>Hello</>}
     </>
   );
 };

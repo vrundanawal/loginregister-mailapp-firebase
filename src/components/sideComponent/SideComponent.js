@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   collection,
   doc,
@@ -10,12 +12,13 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
 //import UserContext from "../../context/UserContext";
-import Modal from "./Modal";
-import UserEmails from "./UserEmails";
+
 import Cookies from "js-cookie";
 import UserContext from "../context/UserContext";
 
-const EmailList = ({ userDetails }) => {
+import Modal from "../mails/Modal";
+
+const SideComponent = ({ userDetails }) => {
   console.log(userDetails);
   const userData = useContext(UserContext);
   const { setEmail } = userData;
@@ -74,45 +77,38 @@ const EmailList = ({ userDetails }) => {
 
   return (
     <>
-      <div className="container">
-        {/* <div className="card col-md-4 mx-auto p-3 bg-light">
+      {/* <div className="card col-md-4 mx-auto p-3 bg-light">
           <p>
             <b className="text-success">User Loggin successfully</b>
           </p>
         </div>
         <br /> */}
-        <div className="row">
-          <div className="col-md-4 col-sm-12">
-            <button
-              className="btn btn-primary m-2 mb-3"
-              onClick={() => setOpenModal(true)}
-            >
-              Compose mail
-            </button>
 
-            <br />
-            <button type="button" className="btn btn-primary position-relative">
-              Inbox
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {emailListings.length}
-                <span className="visually-hidden">unread messages</span>
-              </span>
-            </button>
+      <div className="col-md-4 col-sm-12">
+        <button
+          className="btn btn-primary m-2 mb-3"
+          onClick={() => setOpenModal(true)}
+        >
+          Compose mail
+        </button>
 
-            <Modal
-              openModal={openModal}
-              onCloseModal={() => setOpenModal(false)}
-              userEmail={userDetails}
-            />
-          </div>
-          <div className="col-md-8 col-sm-12">
-            <UserEmails emailListings={emailListings} />
-            {/* <Email /> */}
-          </div>
-        </div>
+        <br />
+        <button type="button" className="btn btn-primary position-relative">
+          Inbox
+          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {emailListings.length}
+            <span className="visually-hidden">unread messages</span>
+          </span>
+        </button>
+
+        <Modal
+          openModal={openModal}
+          onCloseModal={() => setOpenModal(false)}
+          userEmail={userDetails}
+        />
       </div>
     </>
   );
 };
 
-export default EmailList;
+export default SideComponent;

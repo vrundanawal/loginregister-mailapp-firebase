@@ -15,7 +15,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [status, setStatus] = useState(false);
 
   const userData = useContext(UserContext);
@@ -69,18 +69,15 @@ const Login = () => {
     event.preventDefault();
     try {
       if (isFormValid) {
-        // const userCollectionSnap = await getDocs(collection(db, "users"));
-
-        // userCollectionSnap.forEach((doc) => {
-        //   //console.log(doc.id, " => ", doc.data());
-        //   console.log(doc.data());
-        //   let email1 = doc.data();
-        //   //console.log(email1);
-
-        //   // if (email1 !== _email) {
-        //   //   alert("Email not match");
-        //   // }
-        // });
+        //To check for email is correct or not
+        const docRef = doc(db, "users", _email);
+        const docSnapEmail = await getDoc(docRef);
+        if (docSnapEmail.exists()) {
+          console.log("Document data:", docSnapEmail.data());
+        } else {
+          setStatus(true);
+          setMessage("Email is not matched. Please try again");
+        }
 
         const docSnap = await getDoc(doc(db, "users", _email));
         const user = docSnap.data();
@@ -91,14 +88,11 @@ const Login = () => {
           Cookies.set("user", _email);
           setStatus(true);
           setEmail(user);
-          setErrorMessage("User login Successfully");
-          // setTimeout(() => {
-          //   navigate("/mails");
-          // }, 1000);
+          setMessage("User login Successfully");
           navigate("/mails");
         } else {
           setStatus(true);
-          setErrorMessage("password do not match");
+          setMessage("password do not match");
         }
       }
     } catch (error) {
@@ -112,7 +106,7 @@ const Login = () => {
         {status && (
           <div className="card col-md-4 mx-auto p-3 bg-light">
             <p>
-              <b className="text-success">{errorMessage}</b>
+              <b className="text-danger">{message}</b>
             </p>
           </div>
         )}

@@ -8,6 +8,8 @@ import Home from "./components/Home";
 import { useContext } from "react";
 import UserContext from "./components/context/UserContext";
 import EmailList from "./components/mails/EmailList";
+import Email from "./components/mails/Email";
+
 //import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -32,7 +34,8 @@ function App() {
             <Route path="/mails" element={<EmailList userDetails={email} />} />
           </Route> */}
           <Route path="/mails" element={<EmailList userDetails={email} />} />
-          {/* <Route path="/mail/:id" element={<EmailList userDetails={email} />} /> */}
+
+          <Route path="/mail/:id" element={<Email />} />
 
           <Route path="/*" element={<NotFound />} />
         </Routes>
