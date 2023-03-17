@@ -84,7 +84,7 @@ const Login = () => {
 
         const docSnap = await getDoc(doc(db, "users", _email));
         const user = docSnap.data();
-        //console.log(user);
+        console.log(user);
 
         if (user.password === _password) {
           // setEmail(_email);

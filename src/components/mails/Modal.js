@@ -4,6 +4,7 @@ import { useState } from "react";
 import { db } from "../../firebase.config";
 
 const Modal = ({ openModal, onCloseModal, userEmail }) => {
+  const { email, fname, lname } = userEmail;
   const [toAddress, setToAddress] = useState([]);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
@@ -29,10 +30,12 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
     const timeStamp = new Date().getTime().toString();
     const mails = {
       timeStamp,
-      from: userEmail,
+      from: email,
       subject,
       body,
       isRead: false,
+      fname: fname,
+      lname: lname,
     };
     //console.log(mails);
 

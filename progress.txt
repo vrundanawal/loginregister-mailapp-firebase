@@ -109,6 +109,7 @@ npm install react-hook-form
 16-03-2023
 1) Added the bold class dynamically for the emails
 2) Converted timestamp into data and time format for emails list
-3)
+3)Used the cookies for maintain the state
+4) Tries to applied different methods in array and object
 
 

@@ -3,6 +3,8 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -19,14 +21,9 @@ const EmailList = ({ userDetails }) => {
   console.log(userDetails);
   const userData = useContext(UserContext);
   const { setEmail } = userData;
-
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
-
   const [emailListings, setEmailListings] = useState([]);
-
-  //const [id, setId] = useState([]);
-
   const readCookies = async () => {
     const user = Cookies.get("user");
     if (user) {
@@ -46,6 +43,10 @@ const EmailList = ({ userDetails }) => {
     } else {
       getMails(userDetails.email);
     }
+    //to fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+    return () => {
+      setEmailListings([]);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -53,43 +54,29 @@ const EmailList = ({ userDetails }) => {
     try {
       const mailCollection = collection(db, "mailsnew");
       const q = query(mailCollection, where("to", "==", email));
+
       const querySnapShot = await getDocs(q);
       const lists = [];
-      //const IDS = [];
-      querySnapShot.forEach((doc) => {
+      //const fromEmail = {};
+      querySnapShot.forEach(async (doc) => {
         console.log(doc.id);
         let emailData = doc.data();
-
-        emailData.id = doc.id;
-        //lists.push(doc);
-        lists.push(emailData);
-
-        // const a = doc.data();
-
-        //lists.push(doc.id, doc.data());
-        //IDS.push(doc.id);
         console.log(emailData);
-        //console.log(doc.id, "=>", doc.data());
+        emailData.id = doc.id;
+        lists.push(emailData);
+        console.log(emailData);
+
+        //console.log(emailData.from);
+        //fromEmail.from = emailData.from;
+        //console.log(fromEmail);
       });
 
-      setEmailListings(lists);
+      //getting the from emails details
+      // const fromEmailsSnap = await getDoc(doc(db, "users", fromEmail.from));
+      // const fromEmailGot = fromEmailsSnap.data();
+      // console.log(fromEmailGot);
 
-      // querySnapShot.forEach((doc) => {
-      //   const ids = [doc.id];
-      //   //console.log(ids);
-      //   const userEmails = [doc.data()];
-      //   // console.log(userEmails);
-      //   //lists.push(doc);
-      //   for (var i = 0; i < userEmails.length; i++) {
-      //     // lists.push({id[i] : userEmails[i]})
-      //     lists.push({ [ids[i]]: userEmails[i] });
-      //   }
-      //   //console.log(lists);
-      //   setEmailListings(lists);
-      //   //lists.push(doc.data());
-      //   //IDS.push(doc.id);
-      //   //console.log(doc.id, "=>", doc.data());
-      // });
+      setEmailListings(lists);
     } catch (error) {
       console.log(error);
     }
@@ -119,7 +106,7 @@ const EmailList = ({ userDetails }) => {
             <Modal
               openModal={openModal}
               onCloseModal={() => setOpenModal(false)}
-              userEmail={userDetails.email}
+              userEmail={userDetails}
             />
           </div>
           <div className="col-md-8 col-sm-12">

@@ -1,5 +1,4 @@
-import { useCallback, useState } from "react";
-import EmailComponet from "./EmailComponet";
+import { useState } from "react";
 
 const UserEmails = ({ emailListings }) => {
   console.log(emailListings);
@@ -48,9 +47,9 @@ const UserEmails = ({ emailListings }) => {
       </form>
       <table className="table table-hover">
         <tbody>
-          {emailListings.map((user, index) => (
+          {emailListings.map((user) => (
             <tr
-              key={index}
+              key={user.id}
               style={{ cursor: "pointer" }}
               // className={`bold `}
               className={user.isRead === false ? "bold" : "null"}
@@ -58,6 +57,7 @@ const UserEmails = ({ emailListings }) => {
               // onClick={ShowEmail}
             >
               <td>{user.from}</td>
+              {/* <td>{user.fname}</td> */}
               <td>{user.subject}</td>
 
               <td>{user.body}</td>
@@ -78,7 +78,7 @@ const UserEmails = ({ emailListings }) => {
         </tbody>
       </table>
 
-      {showComp && <EmailComponet />}
+      {showComp && <>Hello</>}
     </>
   );
 };
