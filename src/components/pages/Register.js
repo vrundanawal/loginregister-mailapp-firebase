@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import { useState } from "react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase.config";
 
 import { useNavigate } from "react-router-dom";
@@ -114,24 +114,22 @@ const Register = () => {
     if (isFormValid) {
       //submit the form data
       const user = { fname, lname, email, phone, password };
-      //console.log(user);
-      const docSnap = await getDoc(doc(db, "users", email));
-      const docSnapUser = docSnap.data();
-      console.log("get the details from database " + docSnapUser.email);
-      if (email === docSnapUser.email) {
-        setStatus(true);
+
+      const docRef = doc(db, "users", email);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        //console.log("Document data:", docSnap.data());
         setErrorMessage("User is alredy exists! Go to login");
 
-        //alert("User is alredy exists! Please Login");
         setTimeout(() => {
           navigate("/login");
         }, 2000);
       } else {
-        setStatus(true);
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
         await setDoc(doc(db, "users", email), user);
-        //await setDoc(doc(db, "mails", email), {});
-        //setErrorMessage("User detail stored successfully!");
-        //toast.success("User detail stored successfully!");
+        setStatus(true);
         setErrorMessage("User detail stored successfully!");
         setTimeout(() => {
           setFirstName("");
@@ -142,9 +140,32 @@ const Register = () => {
           navigate("/login");
         }, 2000);
       }
+      //console.log("get the details from database " + docSnapUser.email);
+      // if (email === docSnapUser.email) {
+      //   setStatus(true);
+      //   setErrorMessage("User is alredy exists! Go to login");
 
-      //await setDoc(doc(db, "users", email), user);
-      // await setDoc(doc(db, "mails", email), {});
+      //   //alert("User is alredy exists! Please Login");
+      //   setTimeout(() => {
+      //     navigate("/login");
+      //   }, 2000);
+      // } else {
+      //   setStatus(true);
+      //   // user.timestamp = serverTimestamp();
+      //   await setDoc(doc(db, "users", email), user);
+      //   //await setDoc(doc(db, "mails", email), {});
+      //   //setErrorMessage("User detail stored successfully!");
+      //   //toast.success("User detail stored successfully!");
+      //   setErrorMessage("User detail stored successfully!");
+      //   setTimeout(() => {
+      //     setFirstName("");
+      //     setLastName("");
+      //     setEmail("");
+      //     setPhone("");
+      //     setPassword("");
+      //     navigate("/login");
+      //   }, 2000);
+      // }
 
       //toast.success("User detail stored successfully!");
       //navigate("/login");
