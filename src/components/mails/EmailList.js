@@ -9,11 +9,11 @@ import {
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
-//import UserContext from "../../context/UserContext";
 import Modal from "./Modal";
 import UserEmails from "./UserEmails";
 import Cookies from "js-cookie";
 import UserContext from "../context/UserContext";
+import Search from "./Search";
 
 const EmailList = ({ userDetails }) => {
   //console.log(userDetails);
@@ -48,6 +48,7 @@ const EmailList = ({ userDetails }) => {
       navigate("/login");
     } else {
       getMails(userDetails.email);
+      showSentEmails(userDetails.email);
     }
     //to fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     return () => {
@@ -79,8 +80,8 @@ const EmailList = ({ userDetails }) => {
     }
   };
 
-  //ShowSentEmails
-  const ShowSentEmails = async (email) => {
+  //showSentEmails
+  const showSentEmails = async (email) => {
     try {
       const mailCollection = collection(db, "mailsnew");
       const q = query(mailCollection, where("from", "==", email));
@@ -92,11 +93,13 @@ const EmailList = ({ userDetails }) => {
         //console.log(emailData);
         emailData.id = doc.id;
         lists.push(emailData);
-        console.log(emailData);
+        //console.log(emailData);
       });
       setEmailListings(lists);
       setSendMailLength(lists);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -109,7 +112,7 @@ const EmailList = ({ userDetails }) => {
         </div>
         <br /> */}
         <div className="row">
-          <div className="col-md-4 col-sm-12">
+          <div className="col-md-3 col-sm-12">
             <button
               className="btn btn-primary m-2 mb-3"
               onClick={() => setOpenModal(true)}
@@ -135,7 +138,7 @@ const EmailList = ({ userDetails }) => {
             <button
               type="button"
               className=" mt-3 btn btn-primary position-relative"
-              onClick={() => ShowSentEmails(userDetails.email)}
+              onClick={() => showSentEmails(userDetails.email)}
             >
               Sent Mails
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -150,9 +153,19 @@ const EmailList = ({ userDetails }) => {
               userEmail={userDetails}
             />
           </div>
-          <div className="col-md-8 col-sm-12">
+          <div className="col-md-9 col-sm-12">
+            {/* <form action="">
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search in mails"
+                />
+              </div>
+            </form> */}
+
+            <Search />
             <UserEmails emailListings={emailListings} />
-            {/* <Email /> */}
           </div>
         </div>
       </div>

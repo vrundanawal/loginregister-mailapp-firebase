@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 const UserEmails = ({ emailListings }) => {
-  console.log("emailListings" + emailListings);
-
+  //console.log(emailListings);
   //const [showComp, setShowComp] = useState(false);
 
   const navigate = useNavigate();
@@ -29,15 +28,6 @@ const UserEmails = ({ emailListings }) => {
 
   return (
     <>
-      <form action="">
-        <div className="mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search in mails"
-          />
-        </div>
-      </form>
       <table className="table table-hover">
         <thead>
           <tr>
