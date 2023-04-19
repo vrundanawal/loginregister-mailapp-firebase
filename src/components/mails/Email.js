@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../../firebase.config";
 
-const Email = () => {
+const Email = ({ userDetails }) => {
+  console.log(userDetails.email);
   const { id } = useParams();
   const params = useParams();
   console.log(params);
@@ -28,7 +29,7 @@ const Email = () => {
       <div className="row">
         <div className="col-md-4"></div>
         <div className="col-md-8 col-sm-12">
-          {/* <h1>Hi : {`${id}`}</h1> */}
+          <h1>Hi : {`${id}`}</h1>
         </div>
       </div>
     </div>

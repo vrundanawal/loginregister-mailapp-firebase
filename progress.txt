@@ -118,5 +118,11 @@ npm install react-hook-form
 2) If some error to type email address in login showing the Error messages
 
 
+20-03-2023
+1)Created the new branch for sigleEmail deatils
+git checkout -b feature/singleEmail  
+git push origin feature/singleEmail
+
+
 
 

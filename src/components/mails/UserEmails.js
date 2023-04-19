@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 const UserEmails = ({ emailListings }) => {
-  console.log(emailListings);
+  console.log("emailListings" + emailListings);
+
   //const [showComp, setShowComp] = useState(false);
 
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const UserEmails = ({ emailListings }) => {
         <thead>
           <tr>
             <th>From</th>
+            <th>To</th>
             <th>Subject</th>
             <th>Email Preview</th>
             <th>Time</th>
@@ -59,7 +61,9 @@ const UserEmails = ({ emailListings }) => {
               {/* <td>{user.from}</td> */}
               <td>
                 {user.fname} {user.lname}
+                {/* {user.from} */}
               </td>
+              <td>{user.to}</td>
               <td>{user.subject}</td>
 
               <td>{user.body}</td>

@@ -16,7 +16,7 @@ function App() {
   const userData = useContext(UserContext);
   const { email } = userData;
 
-  console.log(email);
+  //console.log(email);
 
   return (
     <>
@@ -35,7 +35,7 @@ function App() {
           </Route> */}
           <Route path="/mails" element={<EmailList userDetails={email} />} />
 
-          <Route path="/mail/:id" element={<Email />} />
+          <Route path="/mail/:id" element={<Email userDetails={email} />} />
 
           <Route path="/*" element={<NotFound />} />
         </Routes>

@@ -16,12 +16,16 @@ import Cookies from "js-cookie";
 import UserContext from "../context/UserContext";
 
 const EmailList = ({ userDetails }) => {
-  console.log(userDetails);
+  //console.log(userDetails);
   const userData = useContext(UserContext);
   const { setEmail } = userData;
+
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const [emailListings, setEmailListings] = useState([]);
+
+  const [emailListLength, setEmailListLength] = useState([]);
+  const [sendMailLength, setSendMailLength] = useState([]);
 
   // showEmail = false
 
@@ -30,6 +34,7 @@ const EmailList = ({ userDetails }) => {
     if (user) {
       const docSnap = await getDoc(doc(db, "users", user));
       const loginUserDetail = docSnap.data();
+      //console.log("loginUserDetail -- " + loginUserDetail.email);
       getMails(user);
       setEmail(loginUserDetail);
       //const user = docSnap.data();
@@ -59,17 +64,39 @@ const EmailList = ({ userDetails }) => {
       const lists = [];
       //const fromEmail = {};
       querySnapShot.forEach(async (doc) => {
-        console.log(doc.id);
+        //console.log(doc.id);
         let emailData = doc.data();
-        console.log(emailData);
+        //console.log(emailData);
+        emailData.id = doc.id;
+        lists.push(emailData);
+        //console.log(emailData);
+      });
+
+      setEmailListings(lists);
+      setEmailListLength(lists);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //ShowSentEmails
+  const ShowSentEmails = async (email) => {
+    try {
+      const mailCollection = collection(db, "mailsnew");
+      const q = query(mailCollection, where("from", "==", email));
+      const querySnapShot = await getDocs(q);
+      const lists = [];
+      querySnapShot.forEach(async (doc) => {
+        // console.log(doc.data());
+        let emailData = doc.data();
+        //console.log(emailData);
         emailData.id = doc.id;
         lists.push(emailData);
         console.log(emailData);
       });
       setEmailListings(lists);
-    } catch (error) {
-      console.log(error);
-    }
+      setSendMailLength(lists);
+    } catch (error) {}
   };
 
   return (
@@ -91,10 +118,28 @@ const EmailList = ({ userDetails }) => {
             </button>
 
             <br />
-            <button type="button" className="btn btn-primary position-relative">
+            <button
+              type="button"
+              className="btn btn-primary position-relative"
+              onClick={() => getMails(userDetails.email)}
+            >
               Inbox
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {emailListings.length}
+                {emailListLength.length}
+                <span className="visually-hidden">unread messages</span>
+              </span>
+            </button>
+
+            <br />
+
+            <button
+              type="button"
+              className=" mt-3 btn btn-primary position-relative"
+              onClick={() => ShowSentEmails(userDetails.email)}
+            >
+              Sent Mails
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {sendMailLength.length}
                 <span className="visually-hidden">unread messages</span>
               </span>
             </button>
