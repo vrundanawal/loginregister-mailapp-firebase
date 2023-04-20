@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { db } from "../../firebase.config";
 
 const Email = ({ userDetails }) => {
-  console.log(userDetails.email);
+  //console.log(userDetails.email);
   const { id } = useParams();
   const params = useParams();
   console.log(params);
@@ -30,6 +30,7 @@ const Email = ({ userDetails }) => {
         <div className="col-md-4"></div>
         <div className="col-md-8 col-sm-12">
           <h1>Hi : {`${id}`}</h1>
+          <button>Go Back</button>
         </div>
       </div>
     </div>

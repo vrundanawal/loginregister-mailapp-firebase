@@ -1,5 +1,7 @@
 import {
+  addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -102,6 +104,23 @@ const EmailList = ({ userDetails }) => {
     }
   };
 
+  //Delete email
+  const handleDeleteEmail = async (id) => {
+    try {
+      alert(id);
+      if (window.confirm("Are you sure you want to delete?")) {
+        await deleteDoc(doc(db, "mailsnew", id));
+        const updatedListings = emailListings.filter(
+          (listing) => listing.id !== id
+        );
+        setEmailListings(updatedListings);
+        setEmailListLength(updatedListings);
+        setSendMailLength(updatedListings);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="container">
@@ -141,10 +160,6 @@ const EmailList = ({ userDetails }) => {
               onClick={() => showSentEmails(userDetails.email)}
             >
               Sent Mails
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {sendMailLength.length}
-                <span className="visually-hidden">unread messages</span>
-              </span>
             </button>
 
             <Modal
@@ -165,7 +180,10 @@ const EmailList = ({ userDetails }) => {
             </form> */}
 
             <Search />
-            <UserEmails emailListings={emailListings} />
+            <UserEmails
+              emailListings={emailListings}
+              handleDeleteEmail={handleDeleteEmail}
+            />
           </div>
         </div>
       </div>

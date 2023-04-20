@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const UserEmails = ({ emailListings }) => {
+const UserEmails = ({ emailListings, handleDeleteEmail }) => {
   //console.log(emailListings);
   //const [showComp, setShowComp] = useState(false);
 
@@ -8,6 +8,7 @@ const UserEmails = ({ emailListings }) => {
 
   const ShowEmail = (id) => {
     console.log(id);
+
     //setShowComp(true);
     navigate(`/mail/${id}`);
     // navigate(`/mail/${user.id}`);
@@ -32,7 +33,7 @@ const UserEmails = ({ emailListings }) => {
         <thead>
           <tr>
             <th>From</th>
-            <th>To</th>
+            {/* <th>To</th> */}
             <th>Subject</th>
             <th>Email Preview</th>
             <th>Time</th>
@@ -45,7 +46,7 @@ const UserEmails = ({ emailListings }) => {
               style={{ cursor: "pointer" }}
               // className={`bold `}
               className={user.isRead === false ? "bold" : "null"}
-              onClick={() => ShowEmail(user.id)}
+              // onClick={() => ShowEmail(user.id)}
               // onClick={() => ShowEmail(user)}
             >
               {/* <td>{user.from}</td> */}
@@ -53,7 +54,7 @@ const UserEmails = ({ emailListings }) => {
                 {user.fname} {user.lname}
                 {/* {user.from} */}
               </td>
-              <td>{user.to}</td>
+              {/* <td>{user.to}</td> */}
               <td>{user.subject}</td>
 
               <td>{user.body}</td>
@@ -66,6 +67,18 @@ const UserEmails = ({ emailListings }) => {
                   minute: "2-digit",
                   second: "2-digit",
                 }).format(user.timeStamp)}
+              </td>
+              <td>
+                <i
+                  className="fas fa-trash"
+                  onClick={() => handleDeleteEmail(user.id)}
+                ></i>
+              </td>
+              <td>
+                <i
+                  className="fas fa-eye"
+                  onClick={() => ShowEmail(user.id)}
+                ></i>
               </td>
 
               {/* <td>{convertTimeStamp(user.timeStamp)}</td> */}
