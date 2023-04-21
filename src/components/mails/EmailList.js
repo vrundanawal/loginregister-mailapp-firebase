@@ -29,6 +29,9 @@ const EmailList = ({ userDetails }) => {
   const [emailListLength, setEmailListLength] = useState([]);
   const [sendMailLength, setSendMailLength] = useState([]);
 
+  //Delete state
+  const [deletedEmailState, setDeletedEmail] = useState([]);
+
   // showEmail = false
 
   const readCookies = async () => {
@@ -51,6 +54,7 @@ const EmailList = ({ userDetails }) => {
     } else {
       getMails(userDetails.email);
       showSentEmails(userDetails.email);
+      showDeleteEmail(userDetails.email);
     }
     //to fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     return () => {
@@ -105,11 +109,28 @@ const EmailList = ({ userDetails }) => {
   };
 
   //Delete email
+
   const handleDeleteEmail = async (id) => {
     try {
-      alert(id);
       if (window.confirm("Are you sure you want to delete?")) {
+        const docRef = doc(db, "mailsnew", id);
+
+        const docSnap = await getDoc(docRef);
+        console.log(docSnap.data());
+
+        if (docSnap.exists()) {
+          const deleteMailCollection = collection(db, "deletedMail");
+          //console.log("Document data:", docSnap.data());
+          const deleteMails = docSnap.data();
+          console.log(deleteMails);
+          deleteMails.isDeleted = true;
+          await addDoc(deleteMailCollection, deleteMails);
+        } else {
+          // docSnap.data() will be undefined in this case
+          console.log("No such document!");
+        }
         await deleteDoc(doc(db, "mailsnew", id));
+
         const updatedListings = emailListings.filter(
           (listing) => listing.id !== id
         );
@@ -117,6 +138,77 @@ const EmailList = ({ userDetails }) => {
         setEmailListLength(updatedListings);
         setSendMailLength(updatedListings);
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //showDeleteEmail
+  const showDeleteEmail1 = async () => {
+    alert("Deleted");
+    try {
+      //const deleteCollectoion = collection(db, "deletedMail");
+      const q = query(collection(db, "deletedMail"));
+      const querySnapshot = await getDocs(q);
+      const lists = [];
+      querySnapshot.forEach((doc) => {
+        let deleteEmailData = doc.data();
+        deleteEmailData.id = doc.id;
+        console.log(doc.id, " => ", doc.data());
+        lists.push(deleteEmailData);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const showDeleteEmail2 = async (email) => {
+    alert("Deleted" + email);
+    try {
+      // const deleteCollection = collection(db, "deletedMail");
+      // const q = query(
+      //   deleteCollection,
+      //   where("from", "==", email || "to", "===", email)
+      // );
+      // const querySnapshot = await getDocs(q);
+      // const lists = [];
+      // querySnapshot.forEach(async (doc) => {
+      //   console.log(doc.id, " => ", doc.data());
+      //   let deleteEmailData = doc.data();
+      //   deleteEmailData.id = doc.id;
+      //   lists.push(deleteEmailData);
+      // });
+      const q = query(collection(db, "deletedMail"));
+      const querySnapshot = await getDocs(q);
+      //const lists = [];
+      querySnapshot.forEach((doc) => {
+        let deleteEmailData = doc.data();
+        deleteEmailData.id = doc.id;
+        console.log(doc.id, " => ", doc.data());
+        //lists.push(deleteEmailData);
+      });
+
+      //setDeleteMailState(lists);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const showDeleteEmail = async () => {
+    try {
+      const deleteCollection = collection(db, "deletedMail");
+      const q = query(deleteCollection, where("isDeleted", "==", true));
+      const querySnapShot = await getDocs(q);
+      const lists = [];
+      querySnapShot.forEach((doc) => {
+        console.log(doc.data());
+        let deletedEmail = doc.data();
+        deletedEmail.id = doc.id;
+        lists.push(deletedEmail);
+        //console.log("lists--- " + lists);
+      });
+      setDeletedEmail(lists);
+      setEmailListings(lists);
     } catch (error) {
       console.log(error);
     }
@@ -160,6 +252,14 @@ const EmailList = ({ userDetails }) => {
               onClick={() => showSentEmails(userDetails.email)}
             >
               Sent Mails
+            </button>
+            <br />
+            <button
+              type="button"
+              className=" mt-3 btn btn-primary position-relative"
+              onClick={showDeleteEmail}
+            >
+              Deleted Mails
             </button>
 
             <Modal

@@ -36,6 +36,7 @@ const Modal = ({ openModal, onCloseModal, userEmail }) => {
       isRead: false,
       fname: fname,
       lname: lname,
+      isDeleted: false,
     };
     //console.log(mails);
 
