@@ -6,11 +6,11 @@ const UserEmails = ({ emailListings, handleDeleteEmail }) => {
 
   const navigate = useNavigate();
 
-  const ShowEmail = (id) => {
-    console.log(id);
-
+  const showUserEmail = (user) => {
+    console.log(user);
+    //alert(user.id);
     //setShowComp(true);
-    navigate(`/mail/${id}`);
+    navigate(`/mail/${user.id}`);
     // navigate(`/mail/${user.id}`);
   };
 
@@ -77,7 +77,8 @@ const UserEmails = ({ emailListings, handleDeleteEmail }) => {
               <td>
                 <i
                   className="fas fa-eye"
-                  onClick={() => ShowEmail(user.id)}
+                  onClick={() => showUserEmail(user)}
+                  //onClick={() => handleShowUser(user)}
                 ></i>
               </td>
 

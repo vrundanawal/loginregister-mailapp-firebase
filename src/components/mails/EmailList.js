@@ -32,7 +32,7 @@ const EmailList = ({ userDetails }) => {
   //Delete state
   const [deletedEmailState, setDeletedEmail] = useState([]);
 
-  // showEmail = false
+  //IsRead
 
   const readCookies = async () => {
     const user = Cookies.get("user");
@@ -144,55 +144,6 @@ const EmailList = ({ userDetails }) => {
   };
 
   //showDeleteEmail
-  const showDeleteEmail1 = async () => {
-    alert("Deleted");
-    try {
-      //const deleteCollectoion = collection(db, "deletedMail");
-      const q = query(collection(db, "deletedMail"));
-      const querySnapshot = await getDocs(q);
-      const lists = [];
-      querySnapshot.forEach((doc) => {
-        let deleteEmailData = doc.data();
-        deleteEmailData.id = doc.id;
-        console.log(doc.id, " => ", doc.data());
-        lists.push(deleteEmailData);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const showDeleteEmail2 = async (email) => {
-    alert("Deleted" + email);
-    try {
-      // const deleteCollection = collection(db, "deletedMail");
-      // const q = query(
-      //   deleteCollection,
-      //   where("from", "==", email || "to", "===", email)
-      // );
-      // const querySnapshot = await getDocs(q);
-      // const lists = [];
-      // querySnapshot.forEach(async (doc) => {
-      //   console.log(doc.id, " => ", doc.data());
-      //   let deleteEmailData = doc.data();
-      //   deleteEmailData.id = doc.id;
-      //   lists.push(deleteEmailData);
-      // });
-      const q = query(collection(db, "deletedMail"));
-      const querySnapshot = await getDocs(q);
-      //const lists = [];
-      querySnapshot.forEach((doc) => {
-        let deleteEmailData = doc.data();
-        deleteEmailData.id = doc.id;
-        console.log(doc.id, " => ", doc.data());
-        //lists.push(deleteEmailData);
-      });
-
-      //setDeleteMailState(lists);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const showDeleteEmail = async () => {
     try {
@@ -201,7 +152,7 @@ const EmailList = ({ userDetails }) => {
       const querySnapShot = await getDocs(q);
       const lists = [];
       querySnapShot.forEach((doc) => {
-        console.log(doc.data());
+        //console.log(doc.data());
         let deletedEmail = doc.data();
         deletedEmail.id = doc.id;
         lists.push(deletedEmail);
@@ -213,6 +164,17 @@ const EmailList = ({ userDetails }) => {
       console.log(error);
     }
   };
+
+  //handleShowUser
+  // const handleShowUser = (user) => {
+  //   console.log(user);
+  //   //alert(user.id);
+  //   //setShowComp(true);
+  //   //user.isRead = true
+
+  //   navigate(`/mail/${user.id}`);
+  // };
+
   return (
     <>
       <div className="container">
@@ -283,6 +245,7 @@ const EmailList = ({ userDetails }) => {
             <UserEmails
               emailListings={emailListings}
               handleDeleteEmail={handleDeleteEmail}
+              // handleShowUser={handleShowUser}
             />
           </div>
         </div>
