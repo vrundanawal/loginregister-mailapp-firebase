@@ -1,18 +1,18 @@
 import { useNavigate } from "react-router-dom";
 
-const UserEmails = ({ emailListings, handleDeleteEmail }) => {
+const UserEmails = ({ emailListings, handleDeleteEmail, showUserEmail }) => {
   //console.log(emailListings);
   //const [showComp, setShowComp] = useState(false);
 
   const navigate = useNavigate();
 
-  const showUserEmail = (user) => {
-    console.log(user);
-    //alert(user.id);
-    //setShowComp(true);
-    navigate(`/mail/${user.id}`);
-    // navigate(`/mail/${user.id}`);
-  };
+  // const showUserEmail = (user) => {
+  //   console.log(user);
+  //   alert(user.id);
+  //   //setShowComp(true);
+  //   navigate(`/mail/${user.id}`);
+  //   // navigate(`/mail/${user.id}`);
+  // };
 
   const convertTimeStamp = (timeStamp) => {
     var date = new Date(+timeStamp);
@@ -57,7 +57,8 @@ const UserEmails = ({ emailListings, handleDeleteEmail }) => {
               {/* <td>{user.to}</td> */}
               <td>{user.subject}</td>
 
-              <td>{user.body}</td>
+              <td>{user.body.slice(0, 20) + "..."}</td>
+
               <td>
                 {new Intl.DateTimeFormat("en-US", {
                   year: "numeric",

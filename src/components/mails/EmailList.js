@@ -22,6 +22,8 @@ const EmailList = ({ userDetails }) => {
   const userData = useContext(UserContext);
   const { setEmail } = userData;
 
+  //const [btnState, setBtnState] = useState(false);
+
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const [emailListings, setEmailListings] = useState([]);
@@ -78,9 +80,9 @@ const EmailList = ({ userDetails }) => {
         lists.push(emailData);
         //console.log(emailData);
       });
-
       setEmailListings(lists);
       setEmailListLength(lists);
+      // setBtnState((btnState) => !btnState);
     } catch (error) {
       console.log(error);
     }
@@ -165,6 +167,15 @@ const EmailList = ({ userDetails }) => {
     }
   };
 
+  //view the email
+  const showUserEmail = (user) => {
+    console.log(user);
+    alert(user.id);
+    //setShowComp(true);
+    navigate(`/mail/${user.id}`);
+    // navigate(`/mail/${user.id}`);
+  };
+
   //handleShowUser
   // const handleShowUser = (user) => {
   //   console.log(user);
@@ -174,7 +185,7 @@ const EmailList = ({ userDetails }) => {
 
   //   navigate(`/mail/${user.id}`);
   // };
-
+  //let activeClassCheck = btnState ? "active" : null;
   return (
     <>
       <div className="container">
@@ -196,8 +207,9 @@ const EmailList = ({ userDetails }) => {
             <br />
             <button
               type="button"
-              className="btn btn-primary position-relative"
+              className="mt-3 btn btn-primary position-relative"
               onClick={() => getMails(userDetails.email)}
+              //className={`mt-3 btn btn-secondary position-relative ${activeClassCheck}`}
             >
               Inbox
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -210,7 +222,7 @@ const EmailList = ({ userDetails }) => {
 
             <button
               type="button"
-              className=" mt-3 btn btn-primary position-relative"
+              className=" mt-3 btn btn-primary   position-relative"
               onClick={() => showSentEmails(userDetails.email)}
             >
               Sent Mails
@@ -218,7 +230,8 @@ const EmailList = ({ userDetails }) => {
             <br />
             <button
               type="button"
-              className=" mt-3 btn btn-primary position-relative"
+              className=" mt-3 btn btn-primary  position-relative"
+              //className={`mt-3 btn btn-primary position-relative ${activeClassCheck}`}
               onClick={showDeleteEmail}
             >
               Deleted Mails
@@ -245,7 +258,7 @@ const EmailList = ({ userDetails }) => {
             <UserEmails
               emailListings={emailListings}
               handleDeleteEmail={handleDeleteEmail}
-              // handleShowUser={handleShowUser}
+              showUserEmail={showUserEmail}
             />
           </div>
         </div>

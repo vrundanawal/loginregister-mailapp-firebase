@@ -10,8 +10,10 @@ const Email = () => {
   console.log(params.id);
 
   const navigate = useNavigate();
+
   const handleGoBack = () => {
     navigate(-1);
+    //navigate("/mails");
   };
 
   useEffect(() => {
@@ -33,9 +35,10 @@ const Email = () => {
       <div className="row">
         <div className="col-md-4"></div>
         <div className="col-md-8 col-sm-12">
-          <p>Body : {userData?.body}</p>
-          <p>Subject : {userData?.subject}</p>
           <p>From : {userData?.from}</p>
+          <p>Subject : {userData?.subject}</p>
+
+          <p>Body : {userData?.body}</p>
         </div>
       </div>
       <button className="btn btn-primary" onClick={handleGoBack}>
