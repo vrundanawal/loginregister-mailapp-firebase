@@ -73,7 +73,7 @@ const EmailList = ({ userDetails }) => {
         //console.log(emailData);
         emailData.id = doc.id;
         lists.push(emailData);
-        //console.log(emailData);
+        console.log(emailData);
       });
       setEmailListings(lists);
       setEmailListLength(lists);
@@ -92,7 +92,7 @@ const EmailList = ({ userDetails }) => {
       const querySnapShot = await getDocs(q);
       const lists = [];
       querySnapShot.forEach(async (doc) => {
-        // console.log(doc.data());
+        console.log(doc.data());
         let emailData = doc.data();
         //console.log(emailData);
         emailData.id = doc.id;
@@ -137,7 +137,7 @@ const EmailList = ({ userDetails }) => {
         setDeletedEmail(updatedListings);
         setEmailListings(updatedListings);
         setEmailListLength(updatedListings);
-        setSendMailLength(updatedListings);
+        //setSendMailLength(updatedListings);
       }
     } catch (error) {
       console.log(error);
@@ -146,18 +146,23 @@ const EmailList = ({ userDetails }) => {
 
   //showDeleteEmail
 
-  const showDeleteEmail = async () => {
+  const showDeleteEmail = async (email) => {
     try {
       const deleteCollection = collection(db, "deletedMail");
-      const q = query(deleteCollection, where("isDeleted", "==", true));
+      const q = query(
+        deleteCollection,
+        where("isDeleted", "==", true),
+        where("from", "==", email)
+      );
       const querySnapShot = await getDocs(q);
       const lists = [];
       querySnapShot.forEach((doc) => {
-        //console.log(doc.data());
+        console.log(doc.data());
         let deletedEmail = doc.data();
         deletedEmail.id = doc.id;
         lists.push(deletedEmail);
       });
+
       setDeletedEmail(lists);
       setEmailListings(lists);
     } catch (error) {
@@ -167,19 +172,12 @@ const EmailList = ({ userDetails }) => {
 
   //view the email
   const showUserEmail = (user) => {
-    console.log(user);
+    //console.log(user);
     alert(user.id);
     //setShowComp(true);
     navigate(`/mail/${user.id}`);
     // navigate(`/mail/${user.id}`);
   };
-
-  // const handleInputSearch = (event) => {
-  //   //console.log(event.target.value);
-  //   setSearchField(event.target.value);
-  // };
-
-  //console.log("filterSearch", filterSearch);
 
   //handleShowUser
   // const handleShowUser = (user) => {
@@ -237,7 +235,8 @@ const EmailList = ({ userDetails }) => {
               type="button"
               className=" mt-3 btn btn-primary  position-relative"
               //className={`mt-3 btn btn-primary position-relative ${activeClassCheck}`}
-              onClick={showDeleteEmail}
+              //onClick={showDeleteEmail}
+              onClick={() => showDeleteEmail(userDetails.email)}
             >
               Deleted Mails
             </button>
