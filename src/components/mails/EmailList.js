@@ -66,6 +66,7 @@ const EmailList = ({ userDetails }) => {
       const q = query(mailCollection, where("to", "==", email));
       const querySnapShot = await getDocs(q);
       const lists = [];
+
       //const fromEmail = {};
       querySnapShot.forEach(async (doc) => {
         //console.log(doc.id);
@@ -73,10 +74,11 @@ const EmailList = ({ userDetails }) => {
         //console.log(emailData);
         emailData.id = doc.id;
         lists.push(emailData);
-        console.log(emailData);
+        //console.log(emailData);
       });
+
       setEmailListings(lists);
-      setEmailListLength(lists);
+      setEmailListLength(lists.filter((item) => item.isRead === false));
 
       // setBtnState((btnState) => !btnState);
     } catch (error) {
@@ -92,7 +94,7 @@ const EmailList = ({ userDetails }) => {
       const querySnapShot = await getDocs(q);
       const lists = [];
       querySnapShot.forEach(async (doc) => {
-        console.log(doc.data());
+        //console.log(doc.data());
         let emailData = doc.data();
         //console.log(emailData);
         emailData.id = doc.id;
@@ -157,7 +159,7 @@ const EmailList = ({ userDetails }) => {
       const querySnapShot = await getDocs(q);
       const lists = [];
       querySnapShot.forEach((doc) => {
-        console.log(doc.data());
+        //console.log(doc.data());
         let deletedEmail = doc.data();
         deletedEmail.id = doc.id;
         lists.push(deletedEmail);
@@ -172,8 +174,10 @@ const EmailList = ({ userDetails }) => {
 
   //view the email
   const showUserEmail = (user) => {
-    //console.log(user);
-    alert(user.id);
+    console.log(user.isRead);
+    //setEmailListings(emailListings.filter((item) => item.isRead === false));
+
+    //alert(user.id);
     //setShowComp(true);
     navigate(`/mail/${user.id}`);
     // navigate(`/mail/${user.id}`);
@@ -217,6 +221,7 @@ const EmailList = ({ userDetails }) => {
               Inbox
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 {emailListLength.length}
+
                 <span className="visually-hidden">unread messages</span>
               </span>
             </button>

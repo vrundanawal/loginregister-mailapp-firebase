@@ -22,7 +22,7 @@ const Email = () => {
       const docSnap = await getDoc(docRef); // take the snapshot of the reference
       //check if snapshot is exis then set then listing
       if (docSnap.exists()) {
-        console.log(docSnap.data());
+        //console.log(docSnap.data());
 
         setUserData(docSnap.data());
       }
