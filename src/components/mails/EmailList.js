@@ -15,24 +15,23 @@ import Modal from "./Modal";
 import UserEmails from "./UserEmails";
 import Cookies from "js-cookie";
 import UserContext from "../context/UserContext";
-import Search from "./Search";
+//import Search from "./Search";
 
 const EmailList = ({ userDetails }) => {
   //console.log(userDetails);
   const userData = useContext(UserContext);
   const { setEmail } = userData;
-
   //const [btnState, setBtnState] = useState(false);
-
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const [emailListings, setEmailListings] = useState([]);
-
   const [emailListLength, setEmailListLength] = useState([]);
   const [sendMailLength, setSendMailLength] = useState([]);
-
   //Delete state
   const [deletedEmailState, setDeletedEmail] = useState([]);
+  //search State
+  const [searchField, setSearchField] = useState("");
+  const [showFilterList, setShowFilteredList] = useState([]);
 
   //IsRead
 
@@ -57,6 +56,7 @@ const EmailList = ({ userDetails }) => {
       getMails(userDetails.email);
       showSentEmails(userDetails.email);
       showDeleteEmail(userDetails.email);
+      //showDeleteEmail();
     }
     //to fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     return () => {
@@ -82,6 +82,7 @@ const EmailList = ({ userDetails }) => {
       });
       setEmailListings(lists);
       setEmailListLength(lists);
+
       // setBtnState((btnState) => !btnState);
     } catch (error) {
       console.log(error);
@@ -113,6 +114,7 @@ const EmailList = ({ userDetails }) => {
   //Delete email
 
   const handleDeleteEmail = async (id) => {
+    alert(id);
     try {
       if (window.confirm("Are you sure you want to delete?")) {
         const docRef = doc(db, "mailsnew", id);
@@ -132,10 +134,12 @@ const EmailList = ({ userDetails }) => {
           console.log("No such document!");
         }
         await deleteDoc(doc(db, "mailsnew", id));
+        await deleteDoc(doc(db, "deletedMail", id));
 
         const updatedListings = emailListings.filter(
           (listing) => listing.id !== id
         );
+        setDeletedEmail(updatedListings);
         setEmailListings(updatedListings);
         setEmailListLength(updatedListings);
         setSendMailLength(updatedListings);
@@ -158,7 +162,6 @@ const EmailList = ({ userDetails }) => {
         let deletedEmail = doc.data();
         deletedEmail.id = doc.id;
         lists.push(deletedEmail);
-        //console.log("lists--- " + lists);
       });
       setDeletedEmail(lists);
       setEmailListings(lists);
@@ -175,6 +178,28 @@ const EmailList = ({ userDetails }) => {
     navigate(`/mail/${user.id}`);
     // navigate(`/mail/${user.id}`);
   };
+
+  const handleInputSearch = (event) => {
+    //console.log(event.target.value);
+    setSearchField(event.target.value);
+  };
+
+  const filterSearch = emailListings.filter((person) => {
+    // console.log(
+    //   person.fname.toLowerCase().includes(query.toLowerCase()) ||
+    //     person.from.toLowerCase().includes(query.toLowerCase()) ||
+    //     person.subject.toLowerCase().includes(query.toLowerCase())
+    // );
+    return (
+      person.fname.toLowerCase().includes(searchField.toLowerCase()) ||
+      person.from.toLowerCase().includes(searchField.toLowerCase()) ||
+      person.subject.toLowerCase().includes(searchField.toLowerCase()) ||
+      person.body.toLowerCase().includes(searchField.toLowerCase()) ||
+      person.lname.toLowerCase().includes(searchField.toLowerCase())
+    );
+  });
+
+  //console.log("filterSearch", filterSearch);
 
   //handleShowUser
   // const handleShowUser = (user) => {
@@ -244,21 +269,24 @@ const EmailList = ({ userDetails }) => {
             />
           </div>
           <div className="col-md-9 col-sm-12">
-            {/* <form action="">
+            <form action="">
               <div className="mb-3">
                 <input
                   type="text"
                   className="form-control"
                   placeholder="Search in mails"
+                  onChange={handleInputSearch}
                 />
               </div>
-            </form> */}
+            </form>
 
-            <Search />
+            {/* <Search emailListings={emailListings} filterSearch={filterSearch} /> */}
+            {/* <Search emailListings={emailListings} /> */}
             <UserEmails
               emailListings={emailListings}
               handleDeleteEmail={handleDeleteEmail}
               showUserEmail={showUserEmail}
+              // filterSearch={filterSearch}
             />
           </div>
         </div>

@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 const UserEmails = ({ emailListings, handleDeleteEmail, showUserEmail }) => {
   //console.log(emailListings);
   //const [showComp, setShowComp] = useState(false);
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   // const showUserEmail = (user) => {
   //   console.log(user);
