@@ -15,7 +15,6 @@ import Modal from "./Modal";
 import UserEmails from "./UserEmails";
 import Cookies from "js-cookie";
 import UserContext from "../context/UserContext";
-//import Search from "./Search";
 
 const EmailList = ({ userDetails }) => {
   //console.log(userDetails);
@@ -29,9 +28,6 @@ const EmailList = ({ userDetails }) => {
   const [sendMailLength, setSendMailLength] = useState([]);
   //Delete state
   const [deletedEmailState, setDeletedEmail] = useState([]);
-  //search State
-  const [searchField, setSearchField] = useState("");
-  const [showFilterList, setShowFilteredList] = useState([]);
 
   //IsRead
 
@@ -56,7 +52,6 @@ const EmailList = ({ userDetails }) => {
       getMails(userDetails.email);
       showSentEmails(userDetails.email);
       showDeleteEmail(userDetails.email);
-      //showDeleteEmail();
     }
     //to fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     return () => {
@@ -179,25 +174,10 @@ const EmailList = ({ userDetails }) => {
     // navigate(`/mail/${user.id}`);
   };
 
-  const handleInputSearch = (event) => {
-    //console.log(event.target.value);
-    setSearchField(event.target.value);
-  };
-
-  const filterSearch = emailListings.filter((person) => {
-    // console.log(
-    //   person.fname.toLowerCase().includes(query.toLowerCase()) ||
-    //     person.from.toLowerCase().includes(query.toLowerCase()) ||
-    //     person.subject.toLowerCase().includes(query.toLowerCase())
-    // );
-    return (
-      person.fname.toLowerCase().includes(searchField.toLowerCase()) ||
-      person.from.toLowerCase().includes(searchField.toLowerCase()) ||
-      person.subject.toLowerCase().includes(searchField.toLowerCase()) ||
-      person.body.toLowerCase().includes(searchField.toLowerCase()) ||
-      person.lname.toLowerCase().includes(searchField.toLowerCase())
-    );
-  });
+  // const handleInputSearch = (event) => {
+  //   //console.log(event.target.value);
+  //   setSearchField(event.target.value);
+  // };
 
   //console.log("filterSearch", filterSearch);
 
@@ -269,24 +249,10 @@ const EmailList = ({ userDetails }) => {
             />
           </div>
           <div className="col-md-9 col-sm-12">
-            <form action="">
-              <div className="mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search in mails"
-                  onChange={handleInputSearch}
-                />
-              </div>
-            </form>
-
-            {/* <Search emailListings={emailListings} filterSearch={filterSearch} /> */}
-            {/* <Search emailListings={emailListings} /> */}
             <UserEmails
               emailListings={emailListings}
               handleDeleteEmail={handleDeleteEmail}
               showUserEmail={showUserEmail}
-              // filterSearch={filterSearch}
             />
           </div>
         </div>
